@@ -32,14 +32,34 @@ public class ResourceService {
     return resourceRepository.findAll();
   }
 
+  // public void allocateResources(Long eventId, Long resourceId, Allocation allocation) {
+  //   Event event = eventRepository.findById(eventId)
+  //       .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+  //   Resource resource = resourceRepository.findById(resourceId)
+  //       .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
+  //   allocation.setEvent(event);
+  //   allocation.setResource(resource);
+  //   allocationRepository.save(allocation);
+  // }
+
   public void allocateResources(Long eventId, Long resourceId, Allocation allocation) {
     Event event = eventRepository.findById(eventId)
-        .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+        .orElseThrow(() -> new EntityNotFoundException("Event not found with ID: " + eventId));
     Resource resource = resourceRepository.findById(resourceId)
-        .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
+        .orElseThrow(() -> new EntityNotFoundException("Resource not found with ID: " + resourceId));
+    // Validate resource availability or implement other business rules as needed
+    if (!resource.isAvailability()) {
+      throw new RuntimeException("Resource is not available for allocation: " + resource.getName());
+    }
+    // Update resource availability status
+    resource.setAvailability(false);
+    resourceRepository.save(resource);
+    // Allocate the resource to the event
     allocation.setEvent(event);
     allocation.setResource(resource);
-    allocationRepository.save(allocation);
+    // Update the event with resource allocation
+    event.getAllocations().add(allocation);
+    eventRepository.save(event);
   }
 
 }

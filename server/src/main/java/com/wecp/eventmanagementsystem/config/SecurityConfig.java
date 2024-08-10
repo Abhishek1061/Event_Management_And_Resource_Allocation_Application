@@ -26,25 +26,29 @@ import org.springframework.security.web.csrf.CsrfFilter;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+        private final UserDetailsService userDetailsService;
+        private final JwtRequestFilter jwtRequestFilter;
+        private final PasswordEncoder passwordEncoder;
 
         @Autowired
-        private UserService userService;
-        @Autowired
-        private JwtRequestFilter jwtRequestFilter;
-
-        
-
-        @Bean
-        public AuthenticationProvider authenticationProvider() {
-                DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-                provider.setPasswordEncoder(passwordEncoder());
-                provider.setUserDetailsService(userService);
-                return provider;
+        public SecurityConfig(UserDetailsService userDetailsService,
+                        JwtRequestFilter jwtRequestFilter,
+                        PasswordEncoder passwordEncoder) {
+                this.userDetailsService = userDetailsService;
+                this.jwtRequestFilter = jwtRequestFilter;
+                this.passwordEncoder = passwordEncoder;
         }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+                auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
                 http.cors().and().csrf().disable()
                                 .authorizeRequests()
                                 .antMatchers("/api/user/register", "/api/user/login").permitAll()
@@ -52,9 +56,7 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.GET, "/api/planner/events").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.POST, "/api/planner/resource").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.GET, "/api/planner/resources").hasAuthority("PLANNER")
-                                .antMatchers(HttpMethod.POST,
-                                                "/api/planner/allocate-resources?eventId={eventId}&resourceId={resourceId}")
-                                .hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.POST,"/api/planner/allocate-resources").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.GET, "/api/staff/event-details/{eventId}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.PUT, "/api/staff/update-setup/{eventId}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}").hasAuthority("CLIENT")
@@ -62,15 +64,13 @@ public class SecurityConfig {
                                 .and()
                                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Moved this line
-                                                                                                    // here
-
-                return http.build();
+                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         }
 
         @Bean
-        public PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
+        @Override
+        public AuthenticationManager authenticationManagerBean() throws Exception {
+                return super.authenticationManagerBean();
         }
 }
 
