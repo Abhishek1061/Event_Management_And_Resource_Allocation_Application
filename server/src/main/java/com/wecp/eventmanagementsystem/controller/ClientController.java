@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-
+@RestController
 public class ClientController {
 
+    @Autowired
+    private EventService eventService;
 
     @GetMapping("/api/client/booking-details/{eventId}")
     public ResponseEntity<Event> getBookingDetails(@PathVariable Long eventId) {
         // get event details by event id and return with status code 200 OK
+        return new ResponseEntity<Event>(eventService.getEventsById(eventId), HttpStatus.OK);
+        
     }
 }

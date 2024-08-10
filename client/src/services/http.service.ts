@@ -10,4 +10,12 @@ import { AuthService } from './auth.service';
 export class HttpService {
   public serverName=environment.apiUrl;
   //todo: complete missing code..
+
+  constructor(private http:  HttpClient){}
+
+  // addResoueses(resource: any):Observable<any>{
+  //   // return null;
+  // }
+
+
 }

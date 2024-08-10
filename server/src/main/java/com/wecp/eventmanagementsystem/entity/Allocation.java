@@ -12,15 +12,15 @@ public class Allocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long alloctionID;
+    private int quantity;
 
     @ManyToOne
     private Event event;
+
+    @ManyToOne
     private Resource resource;
-    private int quantity;
-
-
-    
     public Allocation() {
     }
 

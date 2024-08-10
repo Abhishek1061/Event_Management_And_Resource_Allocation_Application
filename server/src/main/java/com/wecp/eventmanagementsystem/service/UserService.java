@@ -12,7 +12,33 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
+public class UserService implements UserDetailsService {
 
-public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    public User registerUser(User user){
+        return userRepository.save(user);
+    }
+
+    public User getUserByUsername(String username)
+    {
+        return userRepository.findByUsername(username);
+    }
+    
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User u1=userRepository.findByUsername(username);
+        if(u1==null)
+        {
+            throw new UsernameNotFoundException("User Not Found");
+        }
+        return new org.springframework.security.core.userdetails.User(
+                u1.getUsername(),
+                u1.getPassword(), 
+                new ArrayList<>()
+);
+    }   
+    
 
 }
