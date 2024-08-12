@@ -1,1 +1,37 @@
-//todo: complete missing code..
+<!-- <div>
+    <h1>Manage Resource Allocation</h1>
+</div>
+
+<div>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group"> 
+            <label for="eventId">Event</label>
+            <input type="text" id="eventId" formControlName="eventId" placeholder="Choose Event">
+            <div *ngIf="itemForm.get('eventId')?.hasError('required') 
+        && itemForm.get('eventId')?.touched " class="error">
+        </div> name
+        </div>
+
+        <div class="form-group"> 
+            <label for="resourceId">Resource</label>
+            <input type="text" id="resourceId" formControlName="resourceId" placeholder="Choose Resource">
+            <div *ngIf="itemForm.get('resourceId')?.hasError('required') 
+        && itemForm.get('resourceId')?.touched " class="error">
+        </div> resource
+        </div>
+
+        <div class="form-group"> 
+            <label for="qunatity">Qunatity:</label>
+            <input type="number" id="qunatity" formControlName="qunatity" placeholder="Quantity">
+            <div *ngIf="itemForm.get('qunatity')?.hasError('required') 
+        && itemForm.get('qunatity')?.touched " class="error">
+        </div>
+        </div>
+
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+</div> -->

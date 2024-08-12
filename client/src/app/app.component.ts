@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  IsLoggin:any=false;
+  IsLoggin: boolean=false;
   roleName: string | null;
   constructor(private authService: AuthService, private router:Router)
   {
-   
+    debugger;
     this.IsLoggin=authService.getLoginStatus;
     this.roleName=authService.getRole;
     if(this.IsLoggin==false)

@@ -1,3 +1,15 @@
 <div class="row text-center">
-<h1 class="text-capitalize">Event Management System</h1>
+    <h1 class="text-capitalize">Event Management System</h1>
+</div>
+<div *ngIf="roleName === 'PLANNER'">
+    <app-add-resource></app-add-resource>   
+    <app-event></app-event>
+    <app-resource-allocate></app-resource-allocate>  
+    
+</div>
+<div *ngIf="roleName === 'STAFF'">
+    <app-view-events></app-view-events>
+</div>
+<div *ngIf="roleName === 'CLIENT'">
+    <app-booking-details></app-booking-details> 
 </div>

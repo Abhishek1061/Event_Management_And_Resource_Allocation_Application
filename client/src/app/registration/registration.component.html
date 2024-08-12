@@ -1,1 +1,57 @@
-//todo: complete missing code..
+<div class="container">
+  <div class="card">
+    <div class="row">
+      <div class="col-12">
+        <div class="card-header">
+          <h1 class="text-center">Register</h1>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onRegister()" [formGroup]="itemForm">
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" id="username" formControlName="username" class="form-control" />
+              <div *ngIf="itemForm.get('username')?.hasError('required') && itemForm.get('username')?.touched" class="text-danger">
+                Username is required!
+              </div>
+              <div *ngIf="itemForm.controls['username'].hasError('pattern') && ( itemForm.get('password')?.touched || itemForm.get('password')?.dirty)" class="text-danger">
+                Username must be in lowercase and alphabetical.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" formControlName="email" class="form-control" />
+              <div *ngIf="itemForm.get('email')?.hasError('required') && itemForm.get('email')?.touched" class="text-danger">
+                Email is required!
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" formControlName="password" class="form-control" />
+              <div *ngIf="itemForm.get('password')?.hasError('required') && itemForm.get('password')?.touched" class="text-danger">
+                Password is required!
+              </div>
+              <div *ngIf="itemForm.controls['password'].hasError('pattern') && ( itemForm.get('password')?.touched || itemForm.get('password')?.dirty)" class="text-danger">
+                Password must be in valid pattern.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="role">Role:</label>
+              <select formControlName="role" class="form-control">
+                <option value="STAFF">Staff</option>
+                <option value="PLANNER">Planner</option>
+                <option value="CLIENT">Client</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create User</button>
+            <a [routerLink]="['/login']" class="btn btn-link">Login</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

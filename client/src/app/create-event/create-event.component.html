@@ -1,1 +1,40 @@
-//todo: complete missing code.
+<!-- <div>
+    <h2>Manage Event</h2>
+</div>
+
+<div>
+    <div>
+        <h3>Create Event</h3>
+    </div>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" formControlName="title" placeholder="Title">
+            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('description')?.touched">Title is required</div>
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <input type="text" id="description" formControlName="description" placeholder="Description">
+            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched">Description is required</div>
+        </div>
+        <div>
+            <label for="date">Date</label>
+            <input type="date" id="date" formControlName="date" placeholder="Date">
+            <div *ngIf="itemForm.get('date')?.hasError('required') && itemForm.get('description')?.touched">Date is required</div>
+        </div>
+        <div>
+            <label for="location">Location</label>
+            <input type="text" id="location" formControlName="location" placeholder="Location">
+            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('description')?.touched">Location is required</div>
+        </div>
+        <div>
+            <label for="status">Status</label>
+            <select id="status" formControlName="status">
+                <option value="Initiated">Initiated</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('description')?.touched">Status is required</div>
+        </div>
+        <button type="submit" >Submit</button>
+    </form>
+</div> -->
