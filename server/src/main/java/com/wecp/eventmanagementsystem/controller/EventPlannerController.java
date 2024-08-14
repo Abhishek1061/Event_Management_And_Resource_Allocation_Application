@@ -47,11 +47,13 @@ public class EventPlannerController {
     }
 
     @PostMapping("/api/planner/allocate-resources")
-    public ResponseEntity<String> allocateResources(@RequestParam Long eventId, @RequestParam Long resourceId,
+    public ResponseEntity<String> allocateResources(@RequestParam long eventId, @RequestParam long resourceId,
             @RequestBody Allocation allocation) {
 
         // allocate resources for the event and return a success message with status code 201 (CREATED)
         resourceService.allocateResources(eventId, resourceId, allocation);
-        return new ResponseEntity<>("{\"message\": \"Resource allocated successfully for Event ID: " + eventId + "\"}", HttpStatus.CREATED);
+        return new ResponseEntity<>("{\"message\": \"Resource allocated successfully for Event ID: " + eventId  +"\"}", HttpStatus.CREATED);
     }
+
+    
 }

@@ -1,40 +1,96 @@
-<!-- <div>
-    <h2>Manage Event</h2>
-</div>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Manage Event</h2>
 
-<div>
-    <div>
-        <h3>Create Event</h3>
+  <div class="card">
+    <div class="card-header">
+      <h4>Create Event</h4>
     </div>
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" formControlName="title" placeholder="Title">
-            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('description')?.touched">Title is required</div>
+    <div class="card-body">
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-3">
+          <div class="col">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Title" formControlName="title">
+            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('title')?.touched"
+              class="text-danger">
+              Title is required
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Description"
+              formControlName="description">
+            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched"
+              class="text-danger">
+              Description is required
+            </div>
+          </div>
         </div>
-        <div>
-            <label for="description">Description</label>
-            <input type="text" id="description" formControlName="description" placeholder="Description">
-            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched">Description is required</div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="dateTime" class="form-label">Date</label>
+            <input type="date" class="form-control" id="dateTime" placeholder="Date" formControlName="dateTime">
+            <div *ngIf="itemForm.get('date')?.hasError('required') && itemForm.get('date')?.touched"
+              class="text-danger">
+              Date is required
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" placeholder="Location" formControlName="location">
+            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('location')?.touched"
+              class="text-danger">
+              Location is required
+            </div>
+          </div>
         </div>
-        <div>
-            <label for="date">Date</label>
-            <input type="date" id="date" formControlName="date" placeholder="Date">
-            <div *ngIf="itemForm.get('date')?.hasError('required') && itemForm.get('description')?.touched">Date is required</div>
-        </div>
-        <div>
-            <label for="location">Location</label>
-            <input type="text" id="location" formControlName="location" placeholder="Location">
-            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('description')?.touched">Location is required</div>
-        </div>
-        <div>
-            <label for="status">Status</label>
-            <select id="status" formControlName="status">
-                <option value="Initiated">Initiated</option>
-                <option value="Completed">Completed</option>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" class="form-control" formControlName="status">
+              <option value="Initiated">Initiated</option>
+              <option value="Completed">Completed</option>
             </select>
-            <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('description')?.touched">Status is required</div>
+            <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('status')?.touched"
+              class="text-danger">
+              Status is required
+            </div>
+          </div>
         </div>
-        <button type="submit" >Submit</button>
-    </form>
-</div> -->
+
+        <div class="d-flex justify-content-start">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Date</th>
+          <th scope="col">Location</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eventList">
+       
+          <td>{{ event.eventID }}</td>
+          <td>{{ event.title }}</td>
+          <td>{{ event.description }}</td>
+          <td>{{ event.dateTime }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

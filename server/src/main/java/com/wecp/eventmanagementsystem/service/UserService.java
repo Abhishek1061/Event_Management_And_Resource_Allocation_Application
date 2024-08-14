@@ -65,7 +65,4 @@ public class UserService implements UserDetailsService {
                 u1.getPassword(),
                 new ArrayList<>());
     }
-
-    
-
 }

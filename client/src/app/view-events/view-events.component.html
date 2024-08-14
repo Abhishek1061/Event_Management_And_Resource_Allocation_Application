@@ -100,3 +100,41 @@
     </form>
 </div>
 </div> -->
+
+
+<!-- 
+<div>
+  <button [routerLink]="['/create-event']">Add Event</button>
+ </div>  -->
+ <div>
+  <input type="text" (input)="searchEvent($event)" placeholder="Search With id">
+ </div>
+ <div class="card-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date</th>
+        <th scope="col">Location</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of eventObj">
+     
+        <td>{{ event.eventID }}</td>
+        <td>{{ event.title }}</td>
+        <td>{{ event.description }}</td>
+        <td>{{ event.dateTime }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.status }}</td>
+        <td>
+          <button [routerLink]="['/booking-details/',event.eventID]">View</button> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

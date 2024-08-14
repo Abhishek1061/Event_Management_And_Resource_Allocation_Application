@@ -11,9 +11,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class CreateEventComponent implements OnInit {
   itemForm: FormGroup;
-  formModel:any = {status:null};
-  showError:boolean = false;
-  errorMessage:any;
+  formModel: any = { status: null };
+  showError: boolean = false;
+  errorMessage: any;
+  eventList: any[] = [];
+  showMessage: boolean = false;
+  responseMessage: string = '';
 
   constructor(
     private router: Router,
@@ -32,6 +35,19 @@ export class CreateEventComponent implements OnInit {
 
   ngOnInit(): void {
     // Add your initialization logic here
+    this.getEvents();
+  }
+
+  getEvents() {
+    this.httpService.GetAllevents().subscribe(
+      data => {
+        this.eventList = data;
+      },
+      error => {
+        this.errorMessage = error.message || 'Failed to load events';
+        this.showError = true;
+      }
+    );
   }
 
   onSubmit() {
@@ -39,7 +55,12 @@ export class CreateEventComponent implements OnInit {
       this.httpService.createEvent(this.itemForm.value).subscribe(
         data => {
           // Handle success
-           console.log('Event created:', data);
+          alert('Event created successfully')
+          console.log('Event created:', data);
+          this.responseMessage = data;
+          this.showMessage = true;
+          this.itemForm.reset();
+          this.getEvents();
         },
         error => {
           this.errorMessage = error;

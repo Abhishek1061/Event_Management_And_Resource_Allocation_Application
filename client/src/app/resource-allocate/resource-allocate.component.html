@@ -1,37 +1,38 @@
-<!-- <div>
-    <h1>Manage Resource Allocation</h1>
-</div>
-
-<div>
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-
-        <div class="form-group"> 
-            <label for="eventId">Event</label>
-            <input type="text" id="eventId" formControlName="eventId" placeholder="Choose Event">
-            <div *ngIf="itemForm.get('eventId')?.hasError('required') 
-        && itemForm.get('eventId')?.touched " class="error">
-        </div> name
-        </div>
-
-        <div class="form-group"> 
-            <label for="resourceId">Resource</label>
-            <input type="text" id="resourceId" formControlName="resourceId" placeholder="Choose Resource">
-            <div *ngIf="itemForm.get('resourceId')?.hasError('required') 
-        && itemForm.get('resourceId')?.touched " class="error">
-        </div> resource
-        </div>
-
-        <div class="form-group"> 
-            <label for="qunatity">Qunatity:</label>
-            <input type="number" id="qunatity" formControlName="qunatity" placeholder="Quantity">
-            <div *ngIf="itemForm.get('qunatity')?.hasError('required') 
-        && itemForm.get('qunatity')?.touched " class="error">
-        </div>
-        </div>
-
-        <div>
-            <button type="submit">Submit</button>
-        </div>
+<div class="container">
+    <h1 class="text-center my-4">Manage Resource Allocation</h1>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="form-inline">
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="eventId" class="sr-only">Event</label>
+        <select id="eventId" formControlName="eventId" (change)="getEvent()" class="form-control">
+          <option value="" disabled selected>Select Event</option>
+          <option *ngFor="let item of eventList" [value]="item.eventID">{{item.eventID}} - {{item.title}}</option>
+        </select>
+      </div>
+      
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="resourceId" class="sr-only">Resource</label>
+        <select id="resourceId" formControlName="resourceId" (change)="getResources()" class="form-control">
+          <option value="" disabled selected>Select Resource</option>
+          <option *ngFor="let item of resourceList" [value]="item.resourceID">{{item.resourceID}} - {{item.name}}</option>
+        </select>
+      </div>
+            
+  
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="quantity" class="sr-only">Quantity:</label>
+        <input type="number" id="quantity" formControlName="quantity" placeholder="Quantity" class="form-control">
+      </div>
+  
+      <div class="form-group mx-sm-3 mb-2">
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+      </div>
     </form>
-
-</div> -->
+  
+    <div *ngIf="showMessage" class="alert alert-success mt-4" role="alert">
+      Resource allocation saved successfully!
+    </div>
+    <div *ngIf="showError" class="alert alert-danger mt-4" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

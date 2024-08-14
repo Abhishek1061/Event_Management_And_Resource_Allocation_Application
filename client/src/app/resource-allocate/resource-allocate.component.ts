@@ -11,13 +11,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ResourceAllocateComponent implements OnInit {
   itemForm: FormGroup;
-  formModel:any = {status:null};
-  showError:boolean = false;
-  errorMessage:any;
-  resourceList:any = [];
-  assignModel: any = {};
-  showMessage: any;
-  responseMessage: any;
+  showError: boolean = false;
+  errorMessage: string = '';
+  resourceList: any[] = [];
+  showMessage: boolean = false;
+  responseMessage: string = '';
   eventList: any[] = [];
 
   constructor(
@@ -27,7 +25,7 @@ export class ResourceAllocateComponent implements OnInit {
     private authService: AuthService
   ) {
     this.itemForm = this.formBuilder.group({
-      quantity: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1)]],
       eventId: ['', Validators.required],
       resourceId: ['', Validators.required]
     });
@@ -45,42 +43,42 @@ export class ResourceAllocateComponent implements OnInit {
           this.responseMessage = data;
           this.showMessage = true;
           this.itemForm.reset();
-          // console.log('Success:', data);
         },
         error => {
-          this.errorMessage = error;
-          this.showError = true;
-          // console.log('Error:', error);
+          if (error.status === 409) {
+            this.errorMessage = error.error.message;
+            this.showError = true;
+          }
+          // this.errorMessage = error.message || 'An error occurred';
+          
         }
       );
     }
   }
+
+
+
   getResources() {
     this.httpService.GetAllResources().subscribe(
       data => {
         this.resourceList = data;
+      },
+      error => {
+        this.errorMessage = error.message || 'Failed to load resources';
+        this.showError = true;
       }
-
-    )
-    // this.httpService.GetAllResources().subscribe(
-    //   data => {
-    //     this.resourceList = data;
-    //   },
-    //   error => {
-    //     this.errorMessage = error;
-    //     this.showError = true;
-    //   }
-    // );
+    );
   }
 
   getEvent() {
     this.httpService.GetAllevents().subscribe(
       data => {
         this.eventList = data;
+      },
+      error => {
+        this.errorMessage = error.message || 'Failed to load events';
+        this.showError = true;
       }
-      // error => {
-      //   console.log('Error:', error);
-      // }
     );
   }
 }

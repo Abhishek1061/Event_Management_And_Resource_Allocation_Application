@@ -12,8 +12,8 @@ import { map, toArray } from 'rxjs/operators';
   styleUrls: ['./booking-details.component.scss']
 })
 export class BookingDetailsComponent implements OnInit {
-  filteredBooking$: Observable<any> = of([]);
-  booking$: Observable<any> = of([]);
+  
+  
   formModel: any = {status: null};
   showError: boolean = false;
   errorMessage: any;
@@ -22,45 +22,79 @@ export class BookingDetailsComponent implements OnInit {
   showMessage: any;
   responseMessage: any;
   isUpdate: any = false;
+constructor(private httpService:HttpService,private router:Router,private formBuilder:FormBuilder,private authService:AuthService)
+{
 
-  constructor(
-    private httpService: HttpService,
-    private router: Router,
-    private authService: AuthService,
-    private formBuilder: FormBuilder
-  ) { }
-
+}
   ngOnInit(): void {
-    this.getBookings();
+    
   }
-
   getBookings() {
-    this.booking$ = this.httpService.getBookingDetails(this.formModel.eventID);
-    this.filteredBooking$ = this.booking$;
-    if (this.filteredBooking$) {
-      this.filteredBooking$.pipe(toArray());
-      let bookingArray;
-      this.filteredBooking$.subscribe(booking => {
-        bookingArray = booking;
-        if (bookingArray) {
-          const Array = JSON.stringify(bookingArray);
-          localStorage.setItem('BookingData', Array);
-        }
-      });
+     this.eventObj = this.httpService.getBookingDetails(this.formModel.eventID);
     }
-  }
-
-  searchBooking(event: any) {
-    const searchTerm = event.target.value.trim();
-    if (!searchTerm) {
-      this.filteredBooking$ = this.booking$;
-      return;
+  searchEvent(event:any)
+  {
+    const searchTerm=event.target.value.trim();
+    if (searchTerm) {
+      this.httpService.GetEventdetails(searchTerm).subscribe(data => {
+        this.eventObj = data;
+      },
+        error => {
+          this.errorMessage = error;
+          this.showError = true;
+        });
     }
-    this.filteredBooking$ = this.booking$.pipe(
-      map((events) => {
-        return events.filter((event: { eventID: { toString: () => string | any[]; }; }) => event.eventID.toString().includes(searchTerm));
-      })
-    );
   }
 }
+
+//   constructor(
+//     private httpService: HttpService,
+//     private router: ActivatedRoute,
+//     private authService: AuthService,
+//     private formBuilder: FormBuilder
+//   ) { }
+
+//   ngOnInit(): void {
+//     this.router.params.subscribe(data=>
+//       {
+//         const id=data['id'];
+//         this.getBookingDetails(id);
+//       })
+    
+//   }
+//   getBookingDetails(id:any)
+//   {
+//     this.eventObj=this.httpService.getBookingDetails(id);
+//   }
+// }
+
+  // getBookings() {
+  //   this.booking$ = this.httpService.getBookingDetails(this.formModel.eventID);
+  //   this.filteredBooking$ = this.booking$;
+  //   if (this.filteredBooking$) {
+  //     this.filteredBooking$.pipe(toArray());
+  //     let bookingArray;
+  //     this.filteredBooking$.subscribe(booking => {
+  //       bookingArray = booking;
+  //       if (bookingArray) {
+  //         const Array = JSON.stringify(bookingArray);
+  //         localStorage.setItem('BookingData', Array);
+  //       }
+  //     });
+  //   }
+  // }
+
+  // searchBooking(event: any) {
+  //   const searchTerm = event.target.value.trim();
+  //   if (!searchTerm) {
+  //     this.filteredBooking$ = this.booking$;
+  //     return;
+  //   }
+  //   this.filteredBooking$ = this.booking$.pipe(
+  //     map((events) => {
+  //       return events.filter((event: { eventID: { toString: () => string | any[]; }; }) => event.eventID.toString().includes(searchTerm));
+  //     })
+  //   );
+  // }
+
 
