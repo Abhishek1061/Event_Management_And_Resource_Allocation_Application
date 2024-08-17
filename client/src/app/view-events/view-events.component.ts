@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-view-events',
@@ -12,72 +12,186 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 })
 export class ViewEventsComponent implements OnInit {
   itemForm!: FormGroup;
-  formModel: any = { status: null };
   showError: boolean = false;
-  errorMessage: any;
-  eventObj: any[] = [];
-  assignModel: any = {};
-  showMessage: any;
-  responseMessage: any;
-  isUpdate: any = false;
+  errorMessage: string = '';
+  eventObj: any;
+  showMessage: boolean = false;
+  responseMessage: string = '';
+  isUpdate: boolean = false;
+  eventList: any[] = [];
+  minDate : string;
 
-  constructor(private httpService: HttpService, private formBuilder: FormBuilder,
-    private router: Router, private authService: AuthService) {
-      this.getAllEvents();
+  constructor(
+    private httpService: HttpService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) { 
+    this.minDate = this.getTomorrowDate();
   }
 
   ngOnInit(): void {
-    this.itemForm = this.formBuilder.group({
-      eventId: ['', Validators.required],
-      details: ['', Validators.required],
-      dateTime: ['', Validators.required]
-    });
-    
+    this.initForm();
+    this.getEvents();
   }
 
-  getAllEvents() {
-    this.httpService.GetAllevents().subscribe(
-      data => {
-        this.eventObj = data;
+  initForm(): void {
+    this.itemForm = this.formBuilder.group({
+      searchTerm: [''],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      dateTime: ['', [Validators.required, this.dateTimeValidator.bind(this)]],
+      location: ['', Validators.required],
+      status: ['', Validators.required]
+    });
+  }
+
+  dateTimeValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const tomorrow = new Date(this.minDate);
+    
+    if (isNaN(selectedDate.getTime())) {
+      return { invalidDate: true };
+    }
+    
+    if (selectedDate < tomorrow) {
+      return { dateInPast: true };
+    }
+    
+    return null;
+  }
+
+  private getTomorrowDate(): string {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    return tomorrow.toISOString().slice(0, 16);
+  }
+  getEvents() {
+    this.httpService.GetEvents().subscribe(
+      (data) => {
+        this.eventList = data;
       },
       error => {
-        this.errorMessage = error.message || 'Failed to load events';
         this.showError = true;
+        this.errorMessage = error.message || 'Failed to load events';
       }
     );
   }
 
-  searchEvent(event: any) {
-    const searchTerm = event.target.value.trim();
-    if (!searchTerm) {
-      this
+  searchEvent(): void {
+    if (this.itemForm.get('searchTerm')?.valid) {
+      const searchTerm = this.itemForm.get('searchTerm')?.value;
+      this.httpService.GetEventdetails(searchTerm).subscribe(
+        (response) => {
+          this.errorMessage = '';
+          if (response.length !== 0) {
+            console.log(response);
+            this.eventObj = response;
+            this.showMessage = true;
+            this.responseMessage = 'Event found';
+            this.showError = false;
+            this.eventList = [response]; // Update eventList with search result
+          } else {
+            this.responseMessage = '';
+            this.showMessage = false;
+            this.showError = true;
+            this.errorMessage = 'Failed to find event';
+            console.error('Error searching event:', response);
+          }
+        },
+        (error) => {
+          this.showError = true;
+          this.errorMessage = 'Failed to find event';
+          console.error('Error searching event:', error);
+        }
+      );
+    } else {
+      this.itemForm.get('searchTerm')?.markAsTouched();
     }
   }
 
   onSubmit() {
     if (this.itemForm.valid) {
-      this.httpService.updateEvent(this.itemForm.value.eventId, this.itemForm.value.details).subscribe(
-        response => {
-          this.isUpdate = true;
-          this.itemForm.reset();
-          this.responseMessage = 'Event updated successfully.';
-          this.showMessage(this.responseMessage);
-        },
-        error => {
-          this.showError = true;
-          this.errorMessage = 'An error occurred while updating the event.';
-          this.showMessage(this.errorMessage);
-        }
-      );
+      const eventData = this.itemForm.value;
+      if (this.isUpdate && this.eventObj) {
+        const updateData = {
+          title: eventData.title,
+          description: eventData.description,
+          dateTime: eventData.dateTime,
+          location: eventData.location,
+          status: eventData.status
+        };
+        this.httpService.updateEvent(updateData, this.eventObj.eventID).subscribe(
+          response => {
+            this.showMessage = true;
+            this.responseMessage = 'Event updated successfully.';
+            this.getEvents();
+            this.resetForm();
+          },
+          (error) => {
+            this.showError = true;
+            this.errorMessage = 'An error occurred while updating the event: ' + error.message;
+          }
+        );
+        // const modalElement = document.getElementById('updateModal');
+        // const modal = bootstrap.Modal.getInstance(modalElement);
+        // modal?.hide();
+
+      } else {
+
+        // Add logic for creating a new event
+        this.httpService.createEvent(eventData).subscribe(
+          response => {
+            this.showMessage = true;
+            this.responseMessage = 'Event created successfully.';
+            this.getEvents();
+            this.resetForm();
+          },
+          (error) => {
+            this.showError = true;
+            this.errorMessage = 'An error occurred while creating the event: ' + error.message;
+          }
+        );
+      }
     } else {
       this.showError = true;
-      this.errorMessage = 'Please correct the errors in the form.';
+      this.errorMessage = 'Please fill all required fields.';
+      this.itemForm.markAllAsTouched();
     }
   }
 
   edit(val: any) {
-    this.itemForm.patchValue(val);
-    this.itemForm.controls['dateTime'].setValue(new Date(val.dateTime).toISOString().substring(0, 16));
     this.isUpdate = true;
+    this.eventObj = val;
+    this.itemForm.patchValue({
+      title: val.title,
+      description: val.description,
+      dateTime: new Date(val.dateTime).toISOString().slice(0, 16),
+      location: val.location,
+      status: val.status
+    });
+    // Open the modal programmatically
+    // const modal = new bootstrap.Modal(document.getElementById('updateModal'));
+    // modal.show();
   }
+
+  sortByTitle(): void {
+    this.eventList.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  resetForm(): void {
+    this.isUpdate = false;
+    this.itemForm.reset();
+    this.eventObj = null;
+    this.showError = false;
+    this.showMessage = false;
+    // const modalElement = document.getElementById('updateModal');
+    // const modal = bootstrapApplication.Modal.getInstance(modalElement);
+    // modal?.hide();
+  }
+  
 }
+
+
+

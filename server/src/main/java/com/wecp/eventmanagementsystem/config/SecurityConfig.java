@@ -57,10 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers(HttpMethod.POST, "/api/planner/resource").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.GET, "/api/planner/resources").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.POST,"/api/planner/allocate-resources").hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.DELETE,"/api/planner/event/{eventId}").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.GET, "/api/staff/event-details/{eventId}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.PUT, "/api/staff/update-setup/{eventId}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}").hasAuthority("CLIENT")
-                                .antMatchers(HttpMethod.GET, "/api/planner/events").hasAuthority("STAFF")
+                                .antMatchers(HttpMethod.GET, "/api/staff/allEvents").hasAuthority("STAFF")
+                                .antMatchers(HttpMethod.GET, "/api/client/allEvents").hasAuthority("CLIENT")
                                 .anyRequest().authenticated()
                                 .and()
                                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

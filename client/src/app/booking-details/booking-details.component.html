@@ -1,27 +1,76 @@
-<div>
-    <input type="text" (input)="searchEvent($event)" placeholder="Search With id">
-   </div>
-   <div>
-    <table>
-      <thead>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Date Time</th>
-        <th>Location</th>
-        <th>Status</th>
-        
-
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of eventObj">
-          <td>{{item.title}}</td>
-          <td>{{item.description}}</td>
-          <td>{{item.dateTime}}</td>
-          <td>{{item.location}}</td>
-          <td>{{item.status}}</td>
-          <td>
-            <button [routerLink]="['/booking-details/',item.eventID]">View</button> 
-          </td>
-      </tr>
-    </table>
-   </div>
+ <div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-lg">
+      <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">Event Management Search</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="itemForm" (ngSubmit)="searchEvent()">
+          <div class="form-group">
+            <label for="searchTerm">Search Event</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="searchTerm" formControlName="searchTerm" placeholder="Enter event ID or title">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" [disabled]="!itemForm.valid">
+                  <i class="fas fa-search"></i> Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <div *ngIf="message" class="alert mt-3" [ngClass]="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert">
+          {{ message.text }}
+        </div>
+  
+        <div *ngIf="searchPerformed && eventObj.length > 0" class="mt-4">
+          <h3 class="mb-3">Search Results</h3>
+          <div class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Allocations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let event of eventObj">
+                  <td>{{ event.eventID }}</td>
+                  <td>{{ event.title }}</td>
+                  <td>{{ event.description | slice:0:50 }}...</td>
+                  <td>{{ event.dateTime | date:'medium' }}</td>
+                  <td>{{ event.location }}</td>
+                  <td><span class="badge" [ngClass]="getStatusClass(event.status)">{{ event.status }}</span></td>
+                  <td>
+                    <span class="allocation-info"
+                      (mouseenter)="showTooltip($event, event.allocations)" 
+                      (mouseleave)="hideTooltip()">
+                      {{ event.allocations.length }} Allocation(s)
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+        <div *ngIf="searchPerformed && eventObj.length === 0" class="mt-4 alert alert-info">
+          No events found matching your search criteria.
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="tooltipVisible" class="custom-tooltip" [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+      <div *ngFor="let allocation of tooltipContent; let last = last">
+        <p><strong>Quantity:</strong> {{allocation.quantity}}</p>
+        <p><strong>Resource Name:</strong> {{allocation.resource.name}}</p>
+        <p><strong>Resource Type:</strong> {{allocation.resource.type}}</p>
+        <p><strong>Resource Availability:</strong> {{allocation.resource.availability}}</p>
+        <hr *ngIf="!last">
+      </div>
+    </div>
+  </div>

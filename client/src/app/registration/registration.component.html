@@ -1,57 +1,59 @@
-<div class="container">
-  <div class="card">
-    <div class="row">
-      <div class="col-12">
-        <div class="card-header">
-          <h1 class="text-center">Register</h1>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="register-container">
+                    <div class="header-text mb-4">
+                        <h3 class="typing-effect">Create Account</h3>
+                    </div>
+                    <form [formGroup]="itemForm" (ngSubmit)="onRegister()" class="form">
+                        <div class="mb-3">
+                            <input type="text" id="username" formControlName="username" class="form-control" placeholder="Username" required>
+                            <div *ngIf="itemForm.get('username')?.invalid && itemForm.get('username')?.touched" class="invalid-feedback">
+                                <span *ngIf="itemForm.get('username')?.hasError('required')">Username is required</span>
+                                <span *ngIf="itemForm.get('username')?.hasError('pattern')">Username should only contain lowercase letters</span>
+                                <span *ngIf="itemForm.get('username')?.hasError('notUnique')">Username already exists</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" id="email" formControlName="email" class="form-control" placeholder="Email" required>
+                            <div *ngIf="itemForm.get('email')?.invalid && itemForm.get('email')?.touched" class="invalid-feedback">
+                                <span *ngIf="itemForm.get('email')?.hasError('required')">Email is required</span>
+                                <span *ngIf="itemForm.get('email')?.hasError('invalidEmailFormat')">Please enter a valid email address</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" id="password" formControlName="password" class="form-control" placeholder="Password" required>
+                            <div *ngIf="itemForm.get('password')?.invalid && itemForm.get('password')?.touched" class="invalid-feedback">
+                                <span *ngIf="itemForm.get('password')?.hasError('required')">Password is required</span>
+                                <span *ngIf="itemForm.get('password')?.hasError('pattern')">Password must contain at least one number, one uppercase and lowercase letter, one special character, and be 8-20 characters long</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <select id="role" formControlName="role" class="form-select">
+                                <option value="">Select Role</option>
+                                <option value="STAFF">Staff</option>
+                                <option value="PLANNER">Planner</option>
+                                <option value="CLIENT">Client</option>
+                            </select>
+                            <div *ngIf="itemForm.get('role')?.invalid && itemForm.get('role')?.touched" class="invalid-feedback">
+                                Role is required
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" [disabled]="itemForm.invalid">Sign Up</button>
+                    </form>
+                    <div class="separator">OR</div>
+                    <div class="footer-text">
+                        <p>Already have an account? <a (click)="openModal()">Sign In</a></p>
+                    </div>
+                    <div *ngIf="showMessage" class="alert alert-success mt-3 text-center">
+                        {{responseMessage}}
+                    </div>
+                    <div *ngIf="showError" class="alert alert-danger mt-3 text-center">
+                        {{errorMessage}}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <form (ngSubmit)="onRegister()" [formGroup]="itemForm">
-            <div class="form-group">
-              <label for="username">Username:</label>
-              <input type="text" id="username" formControlName="username" class="form-control" />
-              <div *ngIf="itemForm.get('username')?.hasError('required') && itemForm.get('username')?.touched" class="text-danger">
-                Username is required!
-              </div>
-              <div *ngIf="itemForm.controls['username'].hasError('pattern') && ( itemForm.get('password')?.touched || itemForm.get('password')?.dirty)" class="text-danger">
-                Username must be in lowercase and alphabetical.
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" formControlName="email" class="form-control" />
-              <div *ngIf="itemForm.get('email')?.hasError('required') && itemForm.get('email')?.touched" class="text-danger">
-                Email is required!
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" formControlName="password" class="form-control" />
-              <div *ngIf="itemForm.get('password')?.hasError('required') && itemForm.get('password')?.touched" class="text-danger">
-                Password is required!
-              </div>
-              <div *ngIf="itemForm.controls['password'].hasError('pattern') && ( itemForm.get('password')?.touched || itemForm.get('password')?.dirty)" class="text-danger">
-                Password must be in valid pattern.
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="role">Role:</label>
-              <select formControlName="role" class="form-control">
-                <option value="STAFF">Staff</option>
-                <option value="PLANNER">Planner</option>
-                <option value="CLIENT">Client</option>
-              </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Create User</button>
-            <a [routerLink]="['/login']" class="btn btn-link">Login</a>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
-
+</body>

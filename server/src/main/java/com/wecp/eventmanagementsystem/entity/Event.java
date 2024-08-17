@@ -22,19 +22,21 @@ public class Event {
     private String location;
     private String status;
 
-    @OneToMany( mappedBy = "event", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Allocation> allocations;
+
+    
 
     public Event() {
     }
 
-    public Event(String title, String description, Date dateTime, String location, String status) {
+    public Event(String title, String description, Date dateTime, String location, String status, List<Allocation> allocations) {
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
         this.location = location;
         this.status = status;
+        this.allocations =allocations;
     }
 
     public Long getEventID() {

@@ -1,6 +1,7 @@
 package com.wecp.eventmanagementsystem.service;
 
 import com.wecp.eventmanagementsystem.entity.User;
+import com.wecp.eventmanagementsystem.exceptions.UserExistsException;
 import com.wecp.eventmanagementsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,16 +31,35 @@ public class UserService implements UserDetailsService {
     // return userRepository.save(user);
     // }
 
+    // public User registerUser(User user) {
+
+    // User oldUser = userRepository.findByUsername(user.getUsername());
+    // if (oldUser != null) {
+    // throw new RuntimeException("User name Is Unavailable: " +
+    // user.getUsername());
+
+    // }
+    // user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+    // return userRepository.save(user);
+    // }
+
     public User registerUser(User user) {
-
-        User oldUser = userRepository.findByUsername(user.getUsername());
-        if (oldUser != null) {
-            throw new RuntimeException("User name Is Unavailable: " + user.getUsername());
-
+        if ((userRepository.existsByUsername(user.getUsername())) && (userRepository.existsByEmail(user.getEmail()))) {
+            throw new UserExistsException("User alreay exists! Please try another username and Email");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.save(user);
+        else if (userRepository.existsByEmail(user.getEmail())) {
+            throw new UserExistsException("User alreay exists! Please try another email.");
+        } else if (userRepository.existsByUsername(user.getUsername())) {
+            throw new UserExistsException("User alreay exists! Please try another username.");
+        }
+
+        else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            return userRepository.save(user);
+        }
     }
 
     public User loginUser(String username, String password) {

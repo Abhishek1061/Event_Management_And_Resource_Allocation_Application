@@ -132,6 +132,15 @@ export class HttpService {
     return this.http.get(url, { headers });
   }
 
+  deleteEventDetailsByID(eventId: any): Observable<any> {
+    const url = `${this.serverName}/api/planner/event/${eventId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.delete(url, { headers });
+  }
+
   GetAllevents(): Observable<any> {
     const url = `${this.serverName}/api/planner/events`;
     const headers = new HttpHeaders({
@@ -140,6 +149,26 @@ export class HttpService {
     });
     return this.http.get(url, { headers });
   }
+
+  GetEvents(): Observable<any> {
+    const url = `${this.serverName}/api/staff/allEvents`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(url, { headers });
+  }
+
+  GetAlleventsForClient():Observable<any> {
+    const url = `${this.serverName}/api/client/allEvents`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(url, { headers });
+  }
+
+  
 
   GetAllResources(): Observable<any> {
     const url = `${this.serverName}/api/planner/resources`;
@@ -211,4 +240,8 @@ export class HttpService {
   //   console.error(error);
   //   throw error;
   // }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${this.serverName}/api/user/users`, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
 }

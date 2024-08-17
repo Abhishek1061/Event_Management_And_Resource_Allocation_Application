@@ -1,0 +1,238 @@
+:root {
+    --primary-color: #0082e6;
+    --secondary-color: #0f86e1;
+    --text-color: #000000;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling */
+
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 80px;
+    /* Added to account for fixed navbar */
+}
+
+.navbar {
+    // background-color: var(--glass-bg);
+    background: linear-gradient(to right, rgba(100, 57, 134, 0.742), rgba(160, 156, 156, 0.258) 50%, rgba(75, 39, 95, 0.742));
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.605);
+    /* Slightly stronger shadow */
+    backdrop-filter: saturate(200%) blur(50px);
+    /* Increased blur */
+    transition: background-color 0.3s ease;
+    position: fixed;
+    /* Make navbar fixed */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    /* Ensure navbar stays on top */
+    width: 100%;
+    /* Ensure navbar takes full width */
+    height: 12%;
+}
+
+.navbar-brand {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    height: 100px;
+    /* Adjusted from 150px to 60px for better proportions */
+    margin-right: 15px;
+    margin: -20px;
+    margin-left: px;
+    filter: invert(1) brightness(2);
+}
+
+.navbar-nav .nav-link {
+    // color: var(--text-color);
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background-color: var(--secondary-color);
+}
+
+.navbar-toggler {
+    border-color: var(--text-color);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+.btn-login,
+.btn-register {
+    background: rgba(110, 82, 135, 0.582);
+    border: 1px solid rgba(117, 134, 220, 0.594);
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin-right: 10px;
+    // color: rgb(0, 0, 0);
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(234, 238, 255, 0.2);
+    background-color: rgb(89, 8, 156);
+    color: rgb(232, 247, 255);
+
+}
+
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        background-color: var(--primary-color);
+        padding: 1rem;
+    }
+}
+
+
+footer {
+    // background-color: #fefeff;
+    /* Dark background color */
+    color: white;
+    /* White text color */
+    padding: 0;
+    /* Padding for top and bottom */
+    font-size: 12px;
+    height: 10%;
+    background: linear-gradient(to right, rgba(100, 57, 134, 0.742), rgba(160, 156, 156, 0.258) 50%, rgba(75, 39, 95, 0.742));
+}
+
+// #icons a i {
+//     text-align: center;
+// }
+
+.text-uppercase{
+    font-size: 14px;
+    padding-top: 10px;
+}
+
+footer .container {
+    max-width: 1200px;
+    /* Maximum width for the container */
+    margin: 0 auto;
+    /* Center the container */
+}
+
+footer h5 {
+    font-size: 1.25rem;
+    /* Font size for headings */
+    margin-bottom: 1rem;
+    /* Margin below headings */
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    /* Margin below paragraphs */
+}
+
+footer a {
+    color: white;
+    /* White color for links */
+    text-decoration: none;
+    /* Remove underline from links */
+}
+
+footer a:hover {
+    color: #adb5bd;
+    /* Light gray color on hover */
+}
+
+footer .row {
+    display: flex;
+    /* Flexbox layout for the row */
+    flex-wrap: wrap;
+    /* Allow wrapping */
+}
+
+footer .col-lg-4,
+footer .col-md-6 {
+    flex: 1;
+    /* Flex grow */
+    min-width: 250px;
+    /* Minimum width for columns */
+    margin-bottom: 1rem;
+    /* Margin below columns */
+}
+
+footer .img-fluid {
+    max-width: 100%;
+    /* Ensure image is responsive */
+    height: auto;
+    /* Maintain aspect ratio */
+}
+
+footer .text-center {
+    text-align: center;
+    /* Center text */
+}
+
+footer .p-3 {
+    padding: 1rem;
+    /* Padding for the bottom section */
+}
+
+footer .me-4 {
+    margin-right: 1.5rem;
+    /* Margin to the right for social icons */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+
+    footer .col-lg-4,
+    footer .col-md-6 {
+        min-width: 100%;
+        /* Full width for smaller screens */
+        text-align: center;
+        /* Center text for smaller screens */
+    }
+
+    footer .me-4 {
+        margin-right: 0.5rem;
+        /* Smaller margin for social icons */
+    }
+}
+
+@media (max-width: 576px) {
+    footer .container {
+        padding: 0 15px;
+        /* Padding for smaller screens */
+    }
+
+    footer .p-3 {
+        padding: 0.5rem;
+        /* Smaller padding for the bottom section */
+    }
+}

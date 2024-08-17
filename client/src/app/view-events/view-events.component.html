@@ -1,140 +1,145 @@
-<!-- <div>
-    <h2>Manage Events</h2>
-</div>
 
-<div>
-<table class="table">
-    <h3>View & Update Events</h3>
-    <thead><th>Event ID</th></thead>
-    <tr>
-        <input type="text"  formControlName="searchEvent" class="form-control mr-2" placeholder="Search with eventId">
-    </tr>
-    <tr>
-        <button class="btn btn-primary col-md-2" (click)="searchEvent()">Search</button>
-    </tr>
-</table>
-</div>
 
-<div>
-    <table class="table">
-        <h3>Event Information</h3>
-        <thead>
-        <th>Sr#</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Date Time</th>
-        <th>Location</th>
-        <th>Status</th>
-        <th>Action</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let event of eventObj | async">
-          <td>{{event.eventId}}</td>
-          <td>{{event.title}}</td>
-          <td>{{event.description}}</td>
-          <td>{{event.dateTime}}</td>
-          <td>{{event.location}}</td>
-          <td>{{event.status}}</td>
-          <td>
-            <button [routerLink]="['/booking-details/', event.eventId]" class="btn btn-info btn-sm">Update</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">Manage Events</h2>
+
+        <!-- Search Form -->
+        <form [formGroup]="itemForm" (ngSubmit)="searchEvent()" class="mb-4">
+            <div class="input-group">
+                <input type="text" formControlName="searchTerm" class="form-control"
+                    placeholder="Search With ID or Title">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <!-- Alert Messages -->
+        <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ errorMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div *ngIf="showMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ responseMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Events Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="card-title">Events</h5>
+                    <button class="btn btn-secondary" (click)="sortByTitle()">Sort by Title</button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let event of eventList">
+                            <td>{{ event.eventID }}</td>
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.description }}</td>
+                            <td>{{ event.dateTime | date:'medium' }}</td>
+                            <td>{{ event.location }}</td>
+                            <td>{{ event.status }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" (click)="edit(event)" data-bs-toggle="modal"
+                                    data-bs-target="#updateModal">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  
 
-<div class="form-group">
-<div class="form-container">
-     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-
-      <div class="form-group">
-        <label for="title">Title:</label>
-        <input type="text" id="title" formControlName="title"/>
-        <div *ngIf="itemForm.get('title')?.hasError('required') 
-        && itemForm.get('title')?.touched " class="error">
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">{{ isUpdate ? 'Update Event' : 'Create Event' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title:</label>
+                            <input type="text" id="title" formControlName="title" class="form-control" />
+                            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('title')?.touched"
+                                class="text-danger">
+                                Title is required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <input type="text" id="description" formControlName="description" class="form-control" />
+                            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched"
+                                class="text-danger">
+                                Description is required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateTime" class="form-label">Date Time:</label>
+                            <input type="datetime-local" id="dateTime" formControlName="dateTime"
+                                class="form-control" />
+                            <div *ngIf="itemForm.get('dateTime')?.hasError('required') && itemForm.get('dateTime')?.touched"
+                                class="text-danger">
+                                Date and Time are required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location:</label>
+                            <input type="text" id="location" formControlName="location" class="form-control" />
+                            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('location')?.touched"
+                                class="text-danger">
+                                Location is required.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status:</label>
+                            <select id="status" class="form-select" formControlName="status">
+                                <option value="Initiated">Initiated</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('status')?.touched"
+                                class="text-danger">
+                                Status is required.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="onSubmit()">{{ isUpdate ? 'Update' : 'Submit'
+                        }}</button>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" id="description" formControlName="description" />
-        <div*ngIf="
-          itemForm.get('description')?.hasError('required') &&
-          itemForm.get('description')?.touched "class="error">
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="dateTime">Date Time:</label>
-        <input type="date" id="dateTime" formControlName="dateTime"/>
-        <div *ngIf="itemForm.get('dateTime')?.hasError('required') &&
-        itemForm.get('dateTime')?.touched"class="error">
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="location">Location:</label>
-        <input type="text" id="location" formControlName="location" />
-        <div *ngIf="itemForm.get('location')?.hasError('required') &&
-          itemForm.get('location')?.touched"class="error">
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="status">Status:</label>
-        <input type="text" id="status" formControlName="status" />
-        <div *ngIf="itemForm.get('status')?.hasError('required') &&
-        itemForm.get('status')?.touched"class="error">
-        </div>
-      </div>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
 
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-      
-      <div>
-        <h3>Save Successfully</h3>
-      </div>
-  
-    </form>
-</div>
-</div> -->
-
-
-<!-- 
-<div>
-  <button [routerLink]="['/create-event']">Add Event</button>
- </div>  -->
- <div>
-  <input type="text" (input)="searchEvent($event)" placeholder="Search With id">
- </div>
- <div class="card-body">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Title</th>
-        <th scope="col">Description</th>
-        <th scope="col">Date</th>
-        <th scope="col">Location</th>
-        <th scope="col">Status</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let event of eventObj">
-     
-        <td>{{ event.eventID }}</td>
-        <td>{{ event.title }}</td>
-        <td>{{ event.description }}</td>
-        <td>{{ event.dateTime }}</td>
-        <td>{{ event.location }}</td>
-        <td>{{ event.status }}</td>
-        <td>
-          <button [routerLink]="['/booking-details/',event.eventID]">View</button> 
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+</html>

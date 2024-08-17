@@ -1,3 +1,172 @@
-a{
-    cursor: pointer;
+html,
+body {
+    height: 100%;
+    margin-top: -40px;
+    margin-left: -20px; 
+    margin-right: -20px;
+    padding: 0;
+    overflow: hidden;
 }
+
+#logo {
+    height: 40%;
+    width: 40%;
+    margin-top: -40px;
+    margin-bottom: -60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: invert(1) brightness(2);
+    margin-left: 40px;
+
+
+}
+
+//   #content{
+//     margin-top: -40px;
+//   }
+
+body {
+    background-image:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.811), rgba(250, 250, 250, 0.258)),
+        url('/assets/Images/loginImg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.background-radial-gradient {
+    margin-top: 40px;
+    height: 100%;
+}
+
+#radius-shape-1 {
+    height: 220px;
+    width: 220px;
+    top: -60px;
+    left: -130px;
+    background: radial-gradient(#44006b, #ad1fff);
+    overflow: hidden;
+}
+
+#radius-shape-2 {
+    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+    bottom: -60px;
+    right: -110px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(#44006b, #ad1fff);
+    overflow: hidden;
+}
+
+.bg-glass {
+    background-color: hsla(0, 0%, 100%, 0.66) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.bg-glass:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+.typing-effect {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid;
+    width: 0;
+    animation: typing 3.5s steps(100, end) forwards, blink-caret .75s step-end infinite;
+}
+
+.form-control {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.form-control:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.text-danger{
+    font-family: Arial, Helvetica, sans-serif;
+    color: red;
+    font-weight: bold;
+  
+}
+
+#login-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin-right: 10px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+#login-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgb(6, 66, 103);
+    color: rgb(232, 247, 255);
+
+}
+
+.footer-text p a{
+    color: rgb(3, 34, 53) ;
+    font-weight: bold;
+}
+
+.footer-text p a:hover{
+    color:white;
+    font-weight: bold;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: rgba(239, 231, 231, 0);
+    }
+}
+
+// Add this to your existing CSS
+.alert {
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .alert-success {
+    background-color: rgba(40, 167, 69, 0.2);
+    border-color: #28a745;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: #dc3545;
+    color: #721c24;
+  }

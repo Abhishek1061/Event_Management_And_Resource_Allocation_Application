@@ -1,0 +1,54 @@
+.card {
+    transition: all 0.3s ease;
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+  }
+  
+  .custom-tooltip {
+    position: fixed;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-width: 300px;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-tooltip p {
+    margin-bottom: 8px;
+  }
+  
+  .custom-tooltip hr {
+    margin: 12px 0;
+    border-top: 1px solid #eee;
+  }
+  
+  .allocation-info {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+    &:hover {
+      color: #0056b3;
+    }
+  }
+  
+  .badge {
+    font-size: 0.9em;
+    padding: 0.4em 0.6em;
+  }
+  
+  .table {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .table thead th {
+    border-top: none;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(0,123,255,0.1);
+  }
