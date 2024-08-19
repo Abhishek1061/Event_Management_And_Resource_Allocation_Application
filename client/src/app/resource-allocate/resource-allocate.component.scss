@@ -1,303 +1,117 @@
-// /* Additional styles for Resource Allocation component */
-
-// /* Style for select dropdowns */
-// .form-select {
-//     border-radius: 8px;
-//     border: 1px solid #ced4da;
-//     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-// }
-
-// .form-select:focus {
-//     border-color: #80bdff;
-//     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-// }
-
-// /* Style for number input */
-// input[type="number"] {
-//     border-radius: 8px;
-//     border: 1px solid #ced4da;
-//     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-// }
-
-// input[type="number"]:focus {
-//     border-color: #80bdff;
-//     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-// }
-
-// /* Style for form labels */
-// .form-label {
-//     font-weight: 500;
-//     color: #495057;
-// }
-
-// /* Enhance submit button */
-// .btn-primary {
-//     background-color: #007bff;
-//     border-color: #007bff;
-//     transition: all 0.3s ease;
-// }
-
-// .btn-primary:hover {
-//     background-color: #0056b3;
-//     border-color: #0056b3;
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-// }
-
-// /* Style for the card containing the form */
-// .card {
-//     border: none;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//     transition: all 0.3s ease;
-// }
-
-// .card:hover {
-//     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-//     transform: translateY(-5px);
-// }
-
-// /* Style for alert messages */
-// .alert {
-//     border-radius: 8px;
-//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-// }
-
-// /* Add some spacing to the top of the page */
-// .container {
-//     margin-top: 2rem;
-// }
-
-// /* Style the page title */
-// h1 {
-//     color: #333;
-//     border-bottom: 2px solid #007bff;
-//     padding-bottom: 10px;
-//     margin-bottom: 30px;
-// }
-
-
-
- /* Container Styling */
- body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
-}
-
-/* Typing Effect */
-.typing h1 {
-    font-size: 2rem;
-    color: #007bff;
-    white-space: nowrap;
+/* General Styles */
+html, body {
+    height: 100%;
+    margin: -60px -20px 0 -20px;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
     overflow: hidden;
-    border-right: 3px solid;
-    width: 0;
-    animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
 }
 
-@keyframes typing {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes blink-caret {
-    from,
-    to {
-        border-color: transparent;
-    }
-
-    50% {
-        border-color: #007bff;
-    }
-}
 body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0)), url('/assets/Images/loginImg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.container {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
-    position: relative;
+.background-radial-gradient {
+    height: 100%;
 }
 
-/* Typing Effect */
-// .typing h1 {
-//     font-size: 2rem;
-//     color: #007bff;
-//     white-space: nowrap;
-//     overflow: hidden;
-//     border-right: 3px solid;
-//     width: 0;
-//     animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
-// }
-
-@keyframes typing {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes blink-caret {
-    from,
-    to {
-        border-color: transparent;
-    }
-
-    50% {
-        border-color: #007bff;
-    }
-}
-
-/* Loader Styling */
-.loader {
-    border: 5px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    border-top: 5px solid #007bff;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
+#radius-shape-1, #radius-shape-2 {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
+    border-radius: 50%;
+    background: radial-gradient(#44006b, #ad1fff);
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.5);
+    animation: rotate 20s infinite linear;
 }
 
-@keyframes spin {
+#radius-shape-1 {
+    height: 220px;
+    width: 220px;
+    top: -60px;
+    left: -130px;
+}
+
+#radius-shape-2 {
+    height: 300px;
+    width: 300px;
+    bottom: -60px;
+    right: -110px;
+}
+
+@keyframes rotate {
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
     }
 }
 
-/* Hide content initially while loading */
-.content {
-    display: none;
+.bg-glass {
+    background-color: hsla(0, 0%, 100%, 0.85) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 1rem;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.loaded .content {
-    display: block;
-}
-
-.loaded .loader {
-    display: none;
-}
-body {
-    background-color: #f4f7f6;
-    font-family: 'Roboto', sans-serif;
-}
-
-h1 {
-    color: #343a40;
-    font-weight: 700;
-    font-size: 2.5rem;
-}
-
-.card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 30px;
-    background-color: #fff;
-}
-
-.card-header {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 2px solid #0056b3;
-    border-radius: 15px 15px 0 0;
-}
-
-.card-body {
-    padding: 2rem;
-    background-color: #f8f9fa;
-}
-
-.form-label {
-    font-weight: bold;
-    color: #495057;
-}
-
-.form-control {
-    border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-.form-control:focus {
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-    transform: scale(1.02);
+.bg-glass:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
 }
 
 .btn-primary {
-    background-color: #28a745;
-    border-color: #28a745;
-    padding: 0.5rem 2rem;
-    border-radius: 50px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-    display: inline-block; /* Prevents jumping */
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    color: #ffffff;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
+
 .btn-primary:hover {
-    background-color: #218838;
+    background-color: #45a049;
     transform: scale(1.05);
 }
 
-.alert {
-    border-radius: 10px;
+.custom-heading {
+    color: hsl(120, 100%, 75%);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-.form-check-input:checked {
-    background-color: #007bff;
-    border-color: #007bff;
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none; /* Hidden by default */
 }
 
-.container {
-    max-width: 700px;
-    margin-top: 50px;
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.4em;
 }
 
-.animate__animated {
-    --animate-duration: 1s;
+/* Responsive Typography */
+@media (min-width: 1200px) {
+    .display-5 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1199px) {
+    .display-5 {
+        font-size: 2.5rem;
+    }
 }

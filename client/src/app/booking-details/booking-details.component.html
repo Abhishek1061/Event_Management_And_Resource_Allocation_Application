@@ -8,7 +8,7 @@
           <div class="form-group">
             <label for="searchTerm">Search Event</label>
             <div class="input-group">
-              <input type="text" class="form-control" id="searchTerm" formControlName="searchTerm" placeholder="Enter event ID or title">
+              <input type="text" class="form-control" id="searchTerm" formControlName="searchTerm" placeholder="Enter event ID">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit" [disabled]="!itemForm.valid">
                   <i class="fas fa-search"></i> Search
@@ -69,7 +69,7 @@
         <p><strong>Quantity:</strong> {{allocation.quantity}}</p>
         <p><strong>Resource Name:</strong> {{allocation.resource.name}}</p>
         <p><strong>Resource Type:</strong> {{allocation.resource.type}}</p>
-        <p><strong>Resource Availability:</strong> {{allocation.resource.availability}}</p>
+        <!-- <p><strong>Resource Availability:</strong> {{allocation.resource.availability}}</p> -->
         <hr *ngIf="!last">
       </div>
     </div>

@@ -32,7 +32,7 @@
         </div>
     </div>
 </div> -->
- 
+
 
 
 
@@ -42,95 +42,167 @@
 
 
 <!-- <div class="row text-center"> -->
-    <!-- <h3 class="display-4 text-capitalize">Event Management System</h3> -->
-  <!-- </div> -->
-  
-  <div class="d-flex justify-content-center" *ngIf="roleName === 'PLANNER'">
-    <div class="card" style="width: 18rem; margin: 10px;">
-      <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="/assets/Images/Event1.jpg.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/Images/Event2.jpg.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/Images/Event3.jpg.jpg" class="d-block w-100" alt="...">
-          </div>
+<!-- <h3 class="display-4 text-capitalize">Event Management System</h3> -->
+<!-- </div> -->
+
+<div class="d-flex justify-content-center" *ngIf="roleName === 'PLANNER'">
+  <div class="card" style="width: 18rem; margin: 10px;">
+    <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/assets/Images/Event1.jpg.jpg" class="d-block w-100" alt="...">
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample1" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample1" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+        <div class="carousel-item">
+          <img src="/assets/Images/Event2.jpg.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/Images/Event3.jpg.jpg" class="d-block w-100" alt="...">
+        </div>
       </div>
-      <div class="card-body">
-        <h5 class="card-title">Create Event</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="create-event" class="btn btn-primary">Create Event</a>
-      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample1" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample1" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-  
-    <div class="card" style="width: 18rem; margin: 10px;">
-      <div id="carouselExample2" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="/assets/Images/Resource1.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/Images/Resource2.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/Images/Resource3.jpg" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Add Resources</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="add-resource" class="btn btn-primary">Add Resource</a>
-      </div>
+    <div class="card-body">
+      <h5 class="card-title">Create Event</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+        content.</p>
+      <a href="create-event" class="btn btn-primary">Create Event</a>
     </div>
-  
-    <div class="card" style="width: 18rem; margin: 10px;">
-      <div id="carouselExample3" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="/assets/Images/AllocateResource1.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/Images/AllocateResource2.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/Images/AllocateResource3.jpg" class="d-block w-100" alt="...">
-          </div>
+  </div>
+
+  <div class="card" style="width: 18rem; margin: 10px;">
+    <div id="carouselExample2" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/assets/Images/Resource1.jpg" class="d-block w-100" alt="...">
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample3" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample3" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+        <div class="carousel-item">
+          <img src="/assets/Images/Resource2.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/Images/Resource3.jpg" class="d-block w-100" alt="...">
+        </div>
       </div>
-      <div class="card-body">
-        <h5 class="card-title">Allocate Resource</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="resource-allocate" class="btn btn-primary">Allocate Resource</a>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Add Resources</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+        content.</p>
+      <a href="add-resource" class="btn btn-primary">Add Resource</a>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem; margin: 10px;">
+    <div id="carouselExample3" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/assets/Images/AllocateResource1.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/Images/AllocateResource2.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/Images/AllocateResource3.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample3" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample3" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Allocate Resource</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+        content.</p>
+      <a href="resource-allocate" class="btn btn-primary">Allocate Resource</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="roleName === 'STAFF'">
+  <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://cdn.pixabay.com/photo/2024/08/13/20/20/christmas-8967055_1280.jpg" class="d-block w-100"
+          alt="Christmas Event">
+        <div class="carousel-caption custom-caption">
+          <h4>Christmas Event</h4>
+          <p>Christmas is a festive holiday celebrated on December 25th, commemorating the birth of Jesus Christ. It’s a
+            time for family gatherings, gift-giving, and spreading joy and goodwill.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://cdn.pixabay.com/photo/2016/09/26/16/16/festival-1696329_1280.jpg" class="d-block w-100"
+          alt="Festival Event">
+        <div class="carousel-caption custom-caption">
+          <h4>Festival Event</h4>
+          <p>A festive event is a joyful celebration that brings people together to enjoy cultural traditions, music,
+            food, and merriment.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://cdn.pixabay.com/photo/2016/03/26/22/53/alcohol-1281704_1280.jpg" class="d-block w-100"
+          alt="Celebration Event">
+        <div class="carousel-caption custom-caption">
+          <h4>Celebration Event</h4>
+          <p>A celebration event is a joyous occasion where people come together to mark a special moment or achievement
+            with festivities, laughter, and shared happiness.</p>
+        </div>
       </div>
     </div>
   </div>
-  
+</div>
+
+
+<!-- <CLIENT> -->
+<div *ngIf="roleName === 'CLIENT'">
+  <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://cdn.pixabay.com/photo/2016/12/20/13/06/hanging-files-1920437_1280.jpg" class="d-block w-100"
+          alt="Christmas Event">
+        <div class="carousel-caption custom-caption">
+          <h4>Client Data</h4>
+          <p>Client folders help organize and store important documents and information related to each client, ensuring
+            easy access and efficient management.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://cdn.pixabay.com/photo/2018/09/20/17/37/client-3691440_1280.jpg" class="d-block w-100"
+          alt="Festival Event">
+        <div class="carousel-caption custom-caption">
+          <h4>Client Meeting</h4>
+          <p>A client meeting is an opportunity to discuss project details, address concerns, and strengthen the
+            professional relationship with your client.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://cdn.pixabay.com/photo/2018/09/20/17/38/client-3691444_1280.jpg" class="d-block w-100"
+          alt="Celebration Event">
+        <div class="carousel-caption custom-caption">
+          <h5>Client Expectation</h5>
+          <p>Client expectations involve understanding and meeting their needs and preferences, ensuring clear
+            communication, timely delivery, and high-quality service to build trust and satisfaction.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

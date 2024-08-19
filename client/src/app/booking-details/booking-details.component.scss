@@ -5,6 +5,11 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
   }
+
+
+  .container{
+    height: 400px;
+  }
   
   .custom-tooltip {
     position: fixed;
@@ -39,6 +44,7 @@
   .badge {
     font-size: 0.9em;
     padding: 0.4em 0.6em;
+    color: black;
   }
   
   .table {

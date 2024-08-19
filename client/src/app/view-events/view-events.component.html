@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,73 +7,91 @@
     <title>Manage Events</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="view-events.component.scss"> 
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h2 class="mb-4">Manage Events</h2>
+    <section class="background-radial-gradient overflow-hidden">
+        <div class="container px-4 py-5 px-md-5 my-5">
+            <h1>Manage Events</h1>
 
-        <!-- Search Form -->
-        <form [formGroup]="itemForm" (ngSubmit)="searchEvent()" class="mb-4">
-            <div class="input-group">
-                <input type="text" formControlName="searchTerm" class="form-control"
-                    placeholder="Search With ID or Title">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-        </form>
-
-        <!-- Alert Messages -->
-        <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ errorMessage }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <div *ngIf="showMessage" class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ responseMessage }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        <!-- Events Table -->
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5 class="card-title">Events</h5>
-                    <button class="btn btn-secondary" (click)="sortByTitle()">Sort by Title</button>
+            <!-- Search Form -->
+            <div class="card bg-glass mx-auto mb-4 animate__animated animate__zoomIn animate__delay-1s">
+                <div class="card-body">
+                    <form [formGroup]="itemForm" (ngSubmit)="searchEvent()" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" formControlName="searchTerm" class="form-control" placeholder="Search With ID or Title">
+                            <button type="submit" class="btn btn-primary animate__animated animate__pulse animate__infinite">Search</button>
+                        </div>
+                    </form>
                 </div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let event of eventList">
-                            <td>{{ event.eventID }}</td>
-                            <td>{{ event.title }}</td>
-                            <td>{{ event.description }}</td>
-                            <td>{{ event.dateTime | date:'medium' }}</td>
-                            <td>{{ event.location }}</td>
-                            <td>{{ event.status }}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary" (click)="edit(event)" data-bs-toggle="modal"
-                                    data-bs-target="#updateModal">Update</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            </div>
+
+            <!-- Alert Messages -->
+            <div *ngIf="message" class="alert mt-3 animate__animated animate__fadeInDown animate__delay-1s" [ngClass]="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert">
+                {{ message.text }}
+            </div>
+
+            <!-- Events Table -->
+            <div class="card bg-glass mx-auto animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 class="card-title">Events</h5>
+                        <div>
+                            <label for="sort">Sort By:</label>
+                            <select id="sort" (change)="onSortChange($event)" class="form-select">
+                                <option value="id">ID</option>
+                                <option value="title">Title</option>
+                                <option value="date">Date</option>
+                                <option value="location">Location</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter">Filter Events:</label>
+                            <select id="filter" (change)="onFilterChange($event)" class="form-select">
+                                <option value="all">All Events</option>
+                                <option value="past">Past Events</option>
+                                <option value="today">Today's Events</option>
+                                <option value="future">Future Events</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let event of eventList">
+                                <td>{{ event.eventID }}</td>
+                                <td>{{ event.title }}</td>
+                                <td>{{ event.description }}</td>
+                                <td>{{ event.dateTime | date:'medium' }}</td>
+                                <td>{{ event.location }}</td>
+                                <td>{{ event.status }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" (click)="edit(event)" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Update Modal -->
     <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content bg-glass">
                 <div class="modal-header">
                     <h5 class="modal-title" id="updateModalLabel">{{ isUpdate ? 'Update Event' : 'Create Event' }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -84,62 +100,53 @@
                     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title:</label>
-                            <input type="text" id="title" formControlName="title" class="form-control" />
-                            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('title')?.touched"
-                                class="text-danger">
+                            <input type="text" id="title" formControlName="title" class="form-control animate__animated animate__fadeInLeft" />
+                            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('title')?.touched" class="text-danger">
                                 Title is required.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description:</label>
-                            <input type="text" id="description" formControlName="description" class="form-control" />
-                            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched"
-                                class="text-danger">
+                            <input type="text" id="description" formControlName="description" class="form-control animate__animated animate__fadeInRight" />
+                            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched" class="text-danger">
                                 Description is required.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="dateTime" class="form-label">Date Time:</label>
-                            <input type="datetime-local" id="dateTime" formControlName="dateTime"
-                                class="form-control" />
-                            <div *ngIf="itemForm.get('dateTime')?.hasError('required') && itemForm.get('dateTime')?.touched"
-                                class="text-danger">
+                            <input type="datetime-local" id="dateTime" formControlName="dateTime" class="form-control animate__animated animate__fadeInUp" />
+                            <div *ngIf="itemForm.get('dateTime')?.hasError('required') && itemForm.get('dateTime')?.touched" class="text-danger">
                                 Date and Time are required.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="location" class="form-label">Location:</label>
-                            <input type="text" id="location" formControlName="location" class="form-control" />
-                            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('location')?.touched"
-                                class="text-danger">
+                            <input type="text" id="location" formControlName="location" class="form-control animate__animated animate__fadeInUp" />
+                            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('location')?.touched" class="text-danger">
                                 Location is required.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status:</label>
-                            <select id="status" class="form-select" formControlName="status">
-                                <option value="Initiated">Initiated</option>
+                            <select id="status" class="form-select animate__animated animate__fadeInUp" formControlName="status">
+                                <option value="" disabled selected>Select status</option>
+                                <option value="Scheduled">Scheduled</option>
+                                <option value="Cancelled">Cancelled</option>
                                 <option value="Completed">Completed</option>
                             </select>
-                            <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('status')?.touched"
-                                class="text-danger">
+                            <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('status')?.touched" class="text-danger">
                                 Status is required.
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary animate__animated animate__pulse animate__infinite">{{ isUpdate ? 'Update Event' : 'Create Event' }}</button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="onSubmit()">{{ isUpdate ? 'Update' : 'Submit'
-                        }}</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

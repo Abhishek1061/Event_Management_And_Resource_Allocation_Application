@@ -41,7 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 this.passwordEncoder = passwordEncoder;
         }
 
-
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
                 auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
@@ -56,11 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers(HttpMethod.GET, "/api/planner/events").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.POST, "/api/planner/resource").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.GET, "/api/planner/resources").hasAuthority("PLANNER")
-                                .antMatchers(HttpMethod.POST,"/api/planner/allocate-resources").hasAuthority("PLANNER")
-                                .antMatchers(HttpMethod.DELETE,"/api/planner/event/{eventId}").hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.POST, "/api/planner/allocate-resources").hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.DELETE, "/api/planner/event/{eventId}").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.GET, "/api/staff/event-details/{eventId}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.PUT, "/api/staff/update-setup/{eventId}").hasAuthority("STAFF")
-                                .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}").hasAuthority("CLIENT")
+                                .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}")
+                                .hasAuthority("CLIENT")
                                 .antMatchers(HttpMethod.GET, "/api/staff/allEvents").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.GET, "/api/client/allEvents").hasAuthority("CLIENT")
                                 .anyRequest().authenticated()
@@ -75,6 +75,71 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         public AuthenticationManager authenticationManagerBean() throws Exception {
                 return super.authenticationManagerBean();
         }
+
+        // // NEW METHOD BELOW
+
+        // @Configuration
+        // @EnableWebSecurity
+        // @EnableGlobalMethodSecurity(prePostEnabled = true)
+        // public class SecurityConfig
+        // {
+        // private final UserDetailsService userDetailsService;
+        // private final JwtRequestFilter jwtRequestFilter;
+        // private final PasswordEncoder passwordEncoder;
+
+        // @Autowired
+        // public SecurityConfig(UserDetailsService userDetailsService,
+        // JwtRequestFilter jwtRequestFilter,
+        // PasswordEncoder passwordEncoder) {
+        // this.userDetailsService = userDetailsService;
+        // this.jwtRequestFilter = jwtRequestFilter;
+        // this.passwordEncoder = passwordEncoder;
+        // }
+        // @Bean
+        // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+        // Exception{
+        // http.cors().and().csrf().disable().authorizeRequests()
+        // .antMatchers("/api/user/register", "/api/user/login",
+        // "/api/user/users").permitAll()
+        // .antMatchers(HttpMethod.POST, "/api/planner/event").hasAuthority("PLANNER")
+        // .antMatchers(HttpMethod.GET, "/api/planner/events").hasAuthority("PLANNER")
+        // .antMatchers(HttpMethod.POST,
+        // "/api/planner/resource").hasAuthority("PLANNER")
+        // .antMatchers(HttpMethod.GET,
+        // "/api/planner/resources").hasAuthority("PLANNER")
+        // .antMatchers(HttpMethod.POST,"/api/planner/allocate-resources").hasAuthority("PLANNER")
+        // .antMatchers(HttpMethod.GET,
+        // "/api/staff/event-details/{eventId}").hasAuthority("STAFF")
+        // .antMatchers(HttpMethod.PUT,
+        // "/api/staff/update-setup/{eventId}").hasAuthority("STAFF")
+        // .antMatchers(HttpMethod.GET,
+        // "/api/client/booking-details/{eventId}").hasAuthority("CLIENT")
+        // .antMatchers(HttpMethod.GET, "/api/staff/allEvents").hasAuthority("STAFF")
+        // .antMatchers(HttpMethod.GET, "/api/client/allEvents").hasAuthority("CLIENT")
+        // .anyRequest().authenticated()
+        // .and()
+        // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // http.addFilterBefore(jwtRequestFilter,
+        // UsernamePasswordAuthenticationFilter.class);
+        // return http.build();
+        // }
+
+        // @Bean
+        // public AuthenticationProvider authenticationProvider(){
+        // DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
+        // dao.setPasswordEncoder(passwordEncoder);
+        // dao.setUserDetailsService(userDetailsService);
+        // return dao;
+        // }
+
+        // @Bean
+        // public AuthenticationManager authenticationManager(HttpSecurity http) throws
+        // Exception{
+        // return http.getSharedObject(AuthenticationManagerBuilder.class).
+        // userDetailsService(userDetailsService).passwordEncoder(passwordEncoder).
+        // and().build();
+        // }
+        // }
 }
 
 // TODO: implement the security configuration

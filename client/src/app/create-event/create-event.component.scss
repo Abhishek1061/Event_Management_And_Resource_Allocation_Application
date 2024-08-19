@@ -1,0 +1,175 @@
+html,
+body {
+    height: 100%;
+    margin: -60px -20px 0 -20px;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
+}
+
+.container {
+    margin-top: 3rem;
+    color: rgba(101, 57, 134, 0.875);
+    padding-bottom: 40px;
+    position: relative;
+}
+
+.container h1 {
+    padding-top: 30px;
+    color: rgba(101, 57, 134, 0.875);
+}
+
+.card {
+    background-color: #fff;
+    backdrop-filter: saturate(200%) blur(25px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 0;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background: linear-gradient(to right, rgba(100, 57, 134, 0.742), rgba(160, 156, 156, 0.258) 50%, rgba(75, 39, 95, 0.742));
+    color: rgb(84, 48, 112);
+    padding: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-control {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.form-control:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.text-danger {
+    color: #e74c3c;
+}
+
+.table {
+    margin-top: 2rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.table:hover {
+    transform: scale(1.01);
+}
+
+.table thead {
+    background-color: #007bff;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#shapes-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Positioned behind content */
+    overflow: hidden;
+}
+
+.floating-shape {
+    position: absolute;
+    background: radial-gradient(#44006b, #ad1fff);
+    opacity: 0.8;
+    border-radius: 50%;
+    animation: float 10s infinite ease-in-out;
+}
+
+#radius-shape-1 {
+    height: 220px;
+    width: 220px;
+    top: -60px;
+    left: -130px;
+    animation-delay: 0s;
+}
+
+#radius-shape-2 {
+    height: 300px;
+    width: 300px;
+    bottom: -60px;
+    right: -110px;
+    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+    animation-delay: 2s;
+}
+
+#radius-shape-3 {
+    height: 250px;
+    width: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.delete-btn, .btn-primary, .update-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin-right: 10px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.update-btn:hover, .delete-btn:hover, .btn-primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgb(6, 66, 103);
+    color: rgb(232, 247, 255);
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin: 0 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+
+    .floating-shape {
+        display: none; /* Hides shapes on smaller screens for better UX */
+    }
+}

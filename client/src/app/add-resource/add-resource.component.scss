@@ -1,21 +1,20 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
 body {
-    background-image:
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.906), rgba(255, 255, 255, 0));
-        // url('/assets/Images/loginImg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    height: 100%;
+    margin: -60px -20px 0 -20px;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
+
 }
 
 .background-radial-gradient {
     height: 100%;
+    
+}
+
+.background-radial-gradient h1{
+    color: #44006b;
+    
 }
 
 #radius-shape-1 {

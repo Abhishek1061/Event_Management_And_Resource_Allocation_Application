@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
 import { map, Observable, of } from 'rxjs';
-
+ 
 @Component({
   selector: 'app-view-events',
   templateUrl: './view-events.component.html',
@@ -20,21 +20,23 @@ export class ViewEventsComponent implements OnInit {
   isUpdate: boolean = false;
   eventList: any[] = [];
   minDate : string;
-
+  message: { type: 'success' | 'error', text: string } | null = null;
+  searchPerformed: boolean = false;
+ 
   constructor(
     private httpService: HttpService,
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService
-  ) { 
+  ) {
     this.minDate = this.getTomorrowDate();
   }
-
+ 
   ngOnInit(): void {
     this.initForm();
     this.getEvents();
   }
-
+ 
   initForm(): void {
     this.itemForm = this.formBuilder.group({
       searchTerm: [''],
@@ -45,22 +47,22 @@ export class ViewEventsComponent implements OnInit {
       status: ['', Validators.required]
     });
   }
-
+ 
   dateTimeValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const tomorrow = new Date(this.minDate);
-    
+   
     if (isNaN(selectedDate.getTime())) {
       return { invalidDate: true };
     }
-    
+   
     if (selectedDate < tomorrow) {
       return { dateInPast: true };
     }
-    
+   
     return null;
   }
-
+ 
   private getTomorrowDate(): string {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -78,12 +80,14 @@ export class ViewEventsComponent implements OnInit {
       }
     );
   }
-
+ 
   searchEvent(): void {
     if (this.itemForm.get('searchTerm')?.valid) {
       const searchTerm = this.itemForm.get('searchTerm')?.value;
       this.httpService.GetEventdetails(searchTerm).subscribe(
         (response) => {
+          this.handleSearchResponse(response),
+         
           this.errorMessage = '';
           if (response.length !== 0) {
             console.log(response);
@@ -101,6 +105,7 @@ export class ViewEventsComponent implements OnInit {
           }
         },
         (error) => {
+          this.handleSearchError(error)
           this.showError = true;
           this.errorMessage = 'Failed to find event';
           console.error('Error searching event:', error);
@@ -110,7 +115,7 @@ export class ViewEventsComponent implements OnInit {
       this.itemForm.get('searchTerm')?.markAsTouched();
     }
   }
-
+ 
   onSubmit() {
     if (this.itemForm.valid) {
       const eventData = this.itemForm.value;
@@ -137,9 +142,9 @@ export class ViewEventsComponent implements OnInit {
         // const modalElement = document.getElementById('updateModal');
         // const modal = bootstrap.Modal.getInstance(modalElement);
         // modal?.hide();
-
+ 
       } else {
-
+ 
         // Add logic for creating a new event
         this.httpService.createEvent(eventData).subscribe(
           response => {
@@ -160,7 +165,7 @@ export class ViewEventsComponent implements OnInit {
       this.itemForm.markAllAsTouched();
     }
   }
-
+ 
   edit(val: any) {
     this.isUpdate = true;
     this.eventObj = val;
@@ -175,11 +180,104 @@ export class ViewEventsComponent implements OnInit {
     // const modal = new bootstrap.Modal(document.getElementById('updateModal'));
     // modal.show();
   }
-
+ 
+  filterPastEvents(): void {
+    const currentDate = new Date();
+    this.eventList = this.eventList.filter(event => new Date(event.dateTime) < currentDate);
+  }
+ 
+  filterTodayEvents(): void {
+    const currentDate = new Date();
+    this.eventList = this.eventList.filter(event => {
+      const eventDate = new Date(event.dateTime);
+      return eventDate.toDateString() === currentDate.toDateString();
+    });
+  }
+ 
+  filterFutureEvents(): void {
+    const currentDate = new Date();
+    this.eventList = this.eventList.filter(event => new Date(event.dateTime) > currentDate);
+  }
+ 
+  viewAllEvents(): void {
+    this.getEvents();
+  }
+  onFilterChange(event: any): void {
+    const filterValue = event.target.value;
+    switch (filterValue) {
+      case 'past':
+        this.filterPastEvents();
+        break;
+      case 'today':
+        this.filterTodayEvents();
+        break;
+      case 'future':
+        this.filterFutureEvents();
+        break;
+      default:
+        this.viewAllEvents();
+        break;
+    }
+  }
+ 
   sortByTitle(): void {
     this.eventList.sort((a, b) => a.title.localeCompare(b.title));
   }
-
+ 
+  sortById(): void {
+    this.eventList.sort((a, b) => a.eventID - b.eventID);
+  }
+ 
+  sortByDate(): void {
+    this.eventList.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+  }
+  sortByLocation(): void {
+    this.eventList.sort((a, b) => a.location.localeCompare(b.location));
+  }
+ 
+  onSortChange(event: any): void {
+    const sortValue = event.target.value;
+    switch (sortValue) {
+      case 'title':
+        this.sortByTitle();
+        break;
+      case 'date':
+        this.sortByDate();
+        break;
+      case 'location':
+        this.sortByLocation();
+        break;
+      case 'id':
+        this.sortById();
+        break;
+    }
+  }
+ 
+  private handleSearchResponse(response: any): void {
+    this.searchPerformed = true;
+    if (response && Object.keys(response).length !== 0) {
+      this.eventObj = [response];
+      this.showTemporaryMessage('success', 'Event found');
+    } else {
+      this.eventObj = [];
+      this.showTemporaryMessage('error', 'No event found');
+    }
+  }
+ 
+  private handleSearchError(error: any): void {
+    this.searchPerformed = true;
+    this.showTemporaryMessage('error', 'Failed to find event');
+    this.eventObj = [];
+    console.error('Error searching event:', error);
+  }
+ 
+  private showTemporaryMessage(type: 'success' | 'error', text: string): void {
+    this.message = { type, text };
+    setTimeout(() => {
+      this.message = null;
+    }, 5000);
+  }
+ 
   resetForm(): void {
     this.isUpdate = false;
     this.itemForm.reset();
@@ -190,8 +288,6 @@ export class ViewEventsComponent implements OnInit {
     // const modal = bootstrapApplication.Modal.getInstance(modalElement);
     // modal?.hide();
   }
-  
+ 
 }
-
-
-
+ 
