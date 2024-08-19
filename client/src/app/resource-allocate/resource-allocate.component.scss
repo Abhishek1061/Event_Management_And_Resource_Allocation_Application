@@ -4,19 +4,70 @@ html, body {
     margin: -60px -20px 0 -20px;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
+    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(88, 43, 128, 0.765) 50%, rgba(128, 112, 146, 0.258));
     overflow: hidden;
 }
 
 body {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0)), url('/assets/Images/loginImg.jpg');
+    // background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0)), url('/assets/Images/loginImg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+#title{
+    color: white;
+}
+
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 20s infinite ease-in-out;
+  }
+  
+  @for $i from 1 through 10 {
+    .bubble-#{$i} {
+      width: random(150) + 50px;
+      height: random(150) + 50px;
+      background: radial-gradient(hsl(random(360), 70%, 50%),
+          hsl(random(360), 70%, 30%));
+      top: random(100) * 1%;
+      left: random(100) * 1%;
+      animation-delay: random(10) * -1s;
+      animation-duration: 15s + random(10) * 1s;
+    }
+  }
+  
+  @keyframes float {
+  
+    0%,
+    100% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+    }
+  
+    25% {
+      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    }
+  
+    50% {
+      transform: translateY(-100px) translateX(-25px) rotate(10deg) scale(1.2);
+    }
+  
+    75% {
+      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    }
+  } 
+
+
 .background-radial-gradient {
     height: 100%;
+}
+
+.h1{
+    color: black;
+    background-color: #45a049;
 }
 
 #radius-shape-1, #radius-shape-2 {
@@ -114,4 +165,38 @@ body {
     .display-5 {
         font-size: 2.5rem;
     }
+}
+
+
+
+
+  .background-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+
+
+.bg-glass {
+    background-color: hsla(0, 0%, 100%, 0.9) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
 }

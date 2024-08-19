@@ -3,7 +3,7 @@ body {
     margin: -60px -20px 0 -20px;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
+    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(81, 36, 121, 0.838) 50%, rgba(128, 112, 146, 0.258));
 
 }
 
@@ -12,8 +12,14 @@ body {
     
 }
 
-.background-radial-gradient h1{
-    color: #44006b;
+.text-center{
+    color: white;
+}
+
+.container-fluid h1{
+    color: #ffffff;
+    font-weight: bold;
+
     
 }
 
@@ -74,3 +80,54 @@ body {
         border-color: rgb(239, 231, 231);
     }
 }
+
+// .bubble {
+//     position: absolute;
+//     border-radius: 50%;
+//     background: rgba(255, 255, 255, 0.1);
+//     animation: float 10s infinite ease-in-out;
+// }
+// @keyframes float {
+//     0%, 100% { transform: translateY(0) rotate(0deg); }
+//     50% { transform: translateY(-20px) rotate(180deg); }
+// }
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 20s infinite ease-in-out;
+  }
+  
+  @for $i from 1 through 10 {
+    .bubble-#{$i} {
+      width: random(150) + 50px;
+      height: random(150) + 50px;
+      background: radial-gradient(hsl(random(360), 70%, 50%),
+          hsl(random(360), 70%, 30%));
+      top: random(100) * 1%;
+      left: random(100) * 1%;
+      animation-delay: random(10) * -1s;
+      animation-duration: 15s + random(10) * 1s;
+    }
+  }
+  
+  @keyframes float {
+  
+    0%,
+    100% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+    }
+  
+    25% {
+      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    }
+  
+    50% {
+      transform: translateY(-100px) translateX(-25px) rotate(10deg) scale(1.2);
+    }
+  
+    75% {
+      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    }
+  } 

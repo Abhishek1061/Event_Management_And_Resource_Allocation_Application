@@ -4,19 +4,23 @@ body {
     margin: -60px -20px 0 -20px;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
+    background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(88, 43, 128, 0.765) 50%, rgba(128, 112, 146, 0.258));
 }
 
 .container {
     margin-top: 3rem;
-    color: rgba(101, 57, 134, 0.875);
+    color: rgb(255, 255, 255);
     padding-bottom: 40px;
     position: relative;
 }
 
 .container h1 {
-    padding-top: 30px;
-    color: rgba(101, 57, 134, 0.875);
+    color: rgb(255, 255, 255);
+}
+
+.title {
+    margin-top: 60px;
+    color: rgba(255, 255, 255, 0.875);
 }
 
 .card {
@@ -97,44 +101,44 @@ body {
     animation: float 10s infinite ease-in-out;
 }
 
-#radius-shape-1 {
-    height: 220px;
-    width: 220px;
-    top: -60px;
-    left: -130px;
-    animation-delay: 0s;
-}
+// #radius-shape-1 {
+//     height: 220px;
+//     width: 220px;
+//     top: -60px;
+//     left: -130px;
+//     animation-delay: 0s;
+// }
 
-#radius-shape-2 {
-    height: 300px;
-    width: 300px;
-    bottom: -60px;
-    right: -110px;
-    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-    animation-delay: 2s;
-}
+// #radius-shape-2 {
+//     height: 300px;
+//     width: 300px;
+//     bottom: -60px;
+//     right: -110px;
+//     border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+//     animation-delay: 2s;
+// }
 
-#radius-shape-3 {
-    height: 250px;
-    width: 250px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    animation-delay: 4s;
-}
+// #radius-shape-3 {
+//     height: 250px;
+//     width: 250px;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     border-radius: 50%;
+//     animation-delay: 4s;
+// }
 
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-30px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
+// @keyframes float {
+//     0% {
+//         transform: translateY(0px);
+//     }
+//     50% {
+//         transform: translateY(-30px);
+//     }
+//     100% {
+//         transform: translateY(0px);
+//     }
+// }
 
 .delete-btn, .btn-primary, .update-btn {
     background: rgba(255, 255, 255, 0.2);
@@ -173,3 +177,46 @@ body {
         display: none; /* Hides shapes on smaller screens for better UX */
     }
 }
+
+
+
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float 20s infinite ease-in-out;
+  }
+  
+  @for $i from 1 through 10 {
+    .bubble-#{$i} {
+      width: random(150) + 50px;
+      height: random(150) + 50px;
+      background: radial-gradient(hsl(random(360), 70%, 50%),
+          hsl(random(360), 70%, 30%));
+      top: random(100) * 1%;
+      left: random(100) * 1%;
+      animation-delay: random(10) * -1s;
+      animation-duration: 15s + random(10) * 1s;
+    }
+  }
+  
+  @keyframes float {
+  
+    0%,
+    100% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+    }
+  
+    25% {
+      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    }
+  
+    50% {
+      transform: translateY(-100px) translateX(-25px) rotate(10deg) scale(1.2);
+    }
+  
+    75% {
+      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    }
+  }

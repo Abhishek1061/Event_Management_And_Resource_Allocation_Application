@@ -147,11 +147,12 @@ export class CreateEventComponent implements OnInit {
   showMessage: boolean = false;
   responseMessage: string = '';
   minDate: string;
-
-
-
   eventObj: any;
   isUpdate: boolean = false;
+  paginatedEvents: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 3;
+  totalPages: number = 1;
   
   constructor(
     private router: Router,
@@ -191,16 +192,40 @@ export class CreateEventComponent implements OnInit {
     return null;
   }
 
+
+  
   getEvents() {
     this.httpService.GetAllevents().subscribe(
-      data => {
+      (data) => {
         this.eventList = data;
+        this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+        this.setPaginatedEvents();
       },
       error => {
-        this.errorMessage = error.message || 'Failed to load events';
         this.showError = true;
+        this.errorMessage = error.message || 'Failed to load events';
       }
     );
+  }
+
+  setPaginatedEvents() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedEvents = this.eventList.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.setPaginatedEvents();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.setPaginatedEvents();
+    }
   }
 
   deleteEvent(eventId: any) {

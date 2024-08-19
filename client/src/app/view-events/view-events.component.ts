@@ -22,6 +22,11 @@ export class ViewEventsComponent implements OnInit {
   minDate : string;
   message: { type: 'success' | 'error', text: string } | null = null;
   searchPerformed: boolean = false;
+
+  paginatedEvents: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 3;
+  totalPages: number = 1;
  
   constructor(
     private httpService: HttpService,
@@ -69,16 +74,50 @@ export class ViewEventsComponent implements OnInit {
     tomorrow.setHours(0, 0, 0, 0);
     return tomorrow.toISOString().slice(0, 16);
   }
+  // getEvents() {
+  //   this.httpService.GetEvents().subscribe(
+  //     (data) => {
+  //       this.eventList = data;
+  //     },
+  //     error => {
+  //       this.showError = true;
+  //       this.errorMessage = error.message || 'Failed to load events';
+  //     }
+  //   );
+  // }
+
   getEvents() {
     this.httpService.GetEvents().subscribe(
       (data) => {
         this.eventList = data;
+        this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+        this.setPaginatedEvents();
       },
       error => {
         this.showError = true;
         this.errorMessage = error.message || 'Failed to load events';
       }
     );
+  }
+
+  setPaginatedEvents() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedEvents = this.eventList.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.setPaginatedEvents();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.setPaginatedEvents();
+    }
   }
  
   searchEvent(): void {
@@ -222,17 +261,27 @@ export class ViewEventsComponent implements OnInit {
  
   sortByTitle(): void {
     this.eventList.sort((a, b) => a.title.localeCompare(b.title));
+    this.updatePaginatedEvents();
   }
  
   sortById(): void {
     this.eventList.sort((a, b) => a.eventID - b.eventID);
+    this.updatePaginatedEvents();
   }
  
   sortByDate(): void {
     this.eventList.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
+    this.updatePaginatedEvents();
   }
   sortByLocation(): void {
     this.eventList.sort((a, b) => a.location.localeCompare(b.location));
+    this.updatePaginatedEvents();
+  }
+
+  updatePaginatedEvents(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedEvents = this.eventList.slice(startIndex, endIndex);
   }
  
   onSortChange(event: any): void {

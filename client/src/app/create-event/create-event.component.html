@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,19 +11,32 @@
 </head>
 
 <body>
+  <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+        <div class="bubble bubble-6"></div>
+        <div class="bubble bubble-7"></div>
+        <div class="bubble bubble-8"></div>
+        <div class="bubble bubble-9"></div>
+        <div class="bubble bubble-10"></div>
   <div class="container position-relative">
+
+    
     <div id="shapes-container">
-      <!-- Floating Shapes -->
+
       <div id="radius-shape-1" class="floating-shape"></div>
       <div id="radius-shape-2" class="floating-shape"></div>
       <div id="radius-shape-3" class="floating-shape"></div>
+      
     </div>
 
     <h1 class="my-5 display-4 fw-bold text-center mb-4 animate__animated animate__fadeInDown animate__delay-1s">
       Manage Event
     </h1>
 
-    <!-- Event Creation Form -->
+   
     <div class="card mx-auto mb-4 animate__animated animate__zoomIn animate__delay-2s" style="max-width: 600px;">
       <div class="card-header">
         <h4>Create Event</h4>
@@ -83,7 +96,7 @@
       </div>
     </div>
 
-    <!-- Event List -->
+
     <div class="card mx-auto animate__animated animate__zoomIn animate__delay-3s" style="max-width: 900px;">
       <div class="card-header">
         <h4>Event List</h4>
@@ -124,4 +137,147 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </body>
 
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Event</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="create-event.component.scss">
+</head>
+<body>
+    <div class="background-wrapper">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+        <div class="bubble bubble-6"></div>
+        <div class="bubble bubble-7"></div>
+        <div class="bubble bubble-8"></div>
+        <div class="bubble bubble-9"></div>
+        <div class="bubble bubble-10"></div>
+        <div class="bubble bubble-11"></div>
+        <div class="bubble bubble-12"></div>
+        <div class="bubble bubble-13"></div>
+        <div class="bubble bubble-14"></div>
+        <div class="bubble bubble-15"></div>
+        
+        <div class="container position-relative">
+            <h2 class="my-5 display-4 fw-bold text-center mb-4 animate__animated animate__fadeInDown animate__delay-1s" id="title">
+                Manage Event
+            </h2>
+
+            <div class="card mx-auto mb-4 animate__animated animate__zoomIn animate__delay-2s" style="max-width: 600px;">
+                <div class="card-header">
+                    <h4>Create Event</h4>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+                        <!-- Form fields here -->
+                        <div class="row mb-3">
+                          <div class="col">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Title" formControlName="title">
+                            <div *ngIf="itemForm.get('title')?.hasError('required') && itemForm.get('title')?.touched"
+                              class="text-danger">Title is required</div>
+                          </div>
+              
+                          <div class="col">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Description"
+                              formControlName="description">
+                            <div *ngIf="itemForm.get('description')?.hasError('required') && itemForm.get('description')?.touched"
+                              class="text-danger">Description is required</div>
+                          </div>
+                        </div>
+              
+                        <div class="row mb-3">
+                          <div class="col">
+                            <label for="dateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" id="dateTime" placeholder="Date and Time"
+                              formControlName="dateTime" [min]="minDate">
+                            <div *ngIf="itemForm.get('dateTime')?.hasError('required') && itemForm.get('dateTime')?.touched"
+                              class="text-danger">Date and Time is required</div>
+                          </div>
+              
+                          <div class="col">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" placeholder="Location" formControlName="location">
+                            <div *ngIf="itemForm.get('location')?.hasError('required') && itemForm.get('location')?.touched"
+                              class="text-danger">Location is required</div>
+                          </div>
+                        </div>
+              
+                        <div class="mb-3">
+                          <label for="status" class="form-label">Status</label>
+                          <select id="status" class="form-control" formControlName="status">
+                            <option value="" disabled selected>Select status</option>
+                            <option value="Scheduled">Scheduled</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Completed">Completed</option>
+                          </select>
+                          <div *ngIf="itemForm.get('status')?.hasError('required') && itemForm.get('status')?.touched"
+                            class="text-danger">Status is required</div>
+                        </div>
+              
+                        <div class="d-flex justify-content-start">
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mx-auto animate__animated animate__zoomIn animate__delay-3s" style="max-width: 900px;">
+                <div class="card-header">
+                    <h4>Event List</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered animate__animated animate__fadeIn">
+                        <!-- Table content here -->
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let event of paginatedEvents">
+                            <td>{{ event.eventID }}</td>
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.description }}</td>
+                            <td>{{ event.dateTime | date: 'medium' }}</td>
+                            <td>{{ event.location }}</td>
+                            <td>{{ event.status }}</td>
+                            <td>
+                              <button class="delete-btn" (click)="deleteEvent(event.eventID)">Delete</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination-controls">
+                      <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+                      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</body>
 </html>
