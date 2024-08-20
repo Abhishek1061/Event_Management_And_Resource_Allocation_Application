@@ -22,6 +22,8 @@ body {
 }
 
 .navbar {
+    z-index: 1000000 !important;
+    
     // background-color: var(--glass-bg);
     background: linear-gradient(to right, rgba(100, 57, 134, 0.742), rgba(160, 156, 156, 0.258) 50%, rgba(75, 39, 95, 0.742));
     padding: 0.75rem 1rem;
@@ -104,7 +106,7 @@ body {
 .btn-register:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(234, 238, 255, 0.2);
-    background-color: rgb(89, 8, 156);
+    background-color: rgb(6, 66, 103);
     color: rgb(232, 247, 255);
 
 }
@@ -118,7 +120,7 @@ body {
 }
 
 
-footer {
+#footer {
     // background-color: #fefeff;
     /* Dark background color */
     color: white;
@@ -127,7 +129,8 @@ footer {
     /* Padding for top and bottom */
     font-size: 12px;
     height: 10%;
-    z-index: 10001;
+    position: relative;
+    z-index: 20001;
     background: linear-gradient(to right, rgba(100, 57, 134, 0.742), rgba(160, 156, 156, 0.258) 50%, rgba(75, 39, 95, 0.742));
 }
 
@@ -144,7 +147,7 @@ footer .container {
     max-width: 1200px;
     /* Maximum width for the container */
     margin: 0 auto;
-    z-index: 100000;
+    z-index: 2000;
     /* Center the container */
 }
 

@@ -1,132 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-// import { Router } from '@angular/router';
-// import { HttpService } from '../../services/http.service';
-// import { AuthService } from '../../services/auth.service';
-
-// @Component({
-//   selector: 'app-event',
-//   templateUrl: './create-event.component.html',
-//   styleUrls: ['./create-event.component.scss']
-// })
-// export class CreateEventComponent implements OnInit {
-//   itemForm: FormGroup;
-//   formModel: any = { status: null };
-//   showError: boolean = false;
-//   errorMessage: any;
-//   eventList: any[] = [];
-//   showMessage: boolean = false;
-//   responseMessage: string = '';
-//   minDate: string;
-
-//   constructor(
-//     private router: Router,
-//     private httpService: HttpService,
-//     private formBuilder: FormBuilder,
-//     private authService: AuthService
-//   ) {
-
-//     this.minDate = this.getTomorrowDate();
-
-//     this.itemForm = this.formBuilder.group({
-//       title: ['', Validators.required],
-//       description: ['', Validators.required],
-//       dateTime: ['', [Validators.required, this.dateTimeValidator.bind(this)]],
-//       location: ['', Validators.required],
-//       status: ['', Validators.required]
-//     });
-//   }
-
-//   ngOnInit(): void {
-
-//     this.getEvents();
-//   }
-
-//   dateTimeValidator(control: AbstractControl): ValidationErrors | null {
-//     const selectedDate = new Date(control.value);
-//     const tomorrow = new Date(this.minDate);
-
-//     if (isNaN(selectedDate.getTime())) {
-//       return { invalidDate: true };
-//     }
-
-//     if (selectedDate < tomorrow) {
-//       return { dateInPast: true };
-//     }
-
-//     return null;
-//   }
-
-//   getEvents() {
-//     this.httpService.GetAllevents().subscribe(
-//       data => {
-//         this.eventList = data;
-//       },
-//       error => {
-//         this.errorMessage = error.message || 'Failed to load events';
-//         this.showError = true;
-//       }
-//     );
-//   }
-
-//   deleteEvent(eventId:  any){
-//     this.httpService.deleteEventDetailsByID(eventId).subscribe(
-//       data => {
-//         this.getEvents();
-//       },
-//       error => {
-//         this.errorMessage = error.message || 'Failed to delete event';
-//         this.showError = true;
-//       }
-//     );
-//   }
-
-
-
-//   onSubmit() {
-//     if (this.itemForm.valid) {
-//       this.httpService.createEvent(this.itemForm.value).subscribe(
-//         data => {
-//           alert('Event created successfully');
-//           console.log('Event created:', data);
-//           this.responseMessage = data;
-//           this.showMessage = true;
-//           this.itemForm.reset();
-//           this.getEvents();
-//         },
-//         error => {
-//           this.errorMessage = error;
-//           this.showError = true;
-//         }
-//       );
-//     } else {
-//       this.markFormGroupTouched(this.itemForm);
-//     }
-//   }
-
-//   private getTomorrowDate(): string {
-//     const tomorrow = new Date();
-//     tomorrow.setDate(tomorrow.getDate() + 1);
-//     tomorrow.setHours(0, 0, 0, 0);
-//     return tomorrow.toISOString().slice(0, 16);
-//   }
-
-//   private markFormGroupTouched(formGroup: FormGroup) {
-//     Object.values(formGroup.controls).forEach(control => {
-//       control.markAsTouched();
-//       if (control instanceof FormGroup) {
-//         this.markFormGroupTouched(control);
-//       }
-//     });
-//   }
-
-// }
-
-
-
-
-
-
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -139,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./create-event.component.scss']
 })
 export class CreateEventComponent implements OnInit {
-  itemForm: FormGroup;
+  itemForm!: FormGroup;
   formModel: any = { status: null };
   showError: boolean = false;
   errorMessage: any;
@@ -153,7 +24,11 @@ export class CreateEventComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 3;
   totalPages: number = 1;
-  
+
+
+  searchQuery: string = '';
+  searchResults: any[] = [];
+
   constructor(
     private router: Router,
     private httpService: HttpService,
@@ -163,6 +38,23 @@ export class CreateEventComponent implements OnInit {
 
     this.minDate = this.getTomorrowDate();
 
+    // this.itemForm = this.formBuilder.group({
+    //   title: ['', Validators.required],
+    //   description: ['', Validators.required],
+    //   dateTime: ['', [Validators.required, this.dateTimeValidator.bind(this)]],
+    //   location: ['', Validators.required],
+    //   status: ['', Validators.required]
+    // });
+  }
+
+  // ngOnInit(): void {
+  //   this.searchQuery = '';
+  //   this.getEvents();
+  // }
+
+  ngOnInit(): void {
+    this.searchQuery = '';
+    this.getEvents();
     this.itemForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -170,42 +62,111 @@ export class CreateEventComponent implements OnInit {
       location: ['', Validators.required],
       status: ['', Validators.required]
     });
-  }
-
-  ngOnInit(): void {
-
+  
+    this.searchQuery = '';
     this.getEvents();
   }
 
   dateTimeValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
-    const tomorrow = new Date(this.minDate);
-
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0); // Set to midnight
+  
     if (isNaN(selectedDate.getTime())) {
       return { invalidDate: true };
     }
-
+  
     if (selectedDate < tomorrow) {
       return { dateInPast: true };
     }
-
+  
     return null;
   }
 
+  private getTomorrowDate(): string {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().slice(0, 16);
+  }
+  // private getTomorrowDate(): string {
+  //   const tomorrow = new Date();
+  //   tomorrow.setDate(tomorrow.getDate() + 1);
+  //   tomorrow.setHours(0, 0, 0, 0);
+  //   return tomorrow.toISOString().slice(0, 16);
+  // }
 
+  onSearch() {
+    if (!this.searchQuery.trim()) {
+      this.getEvents(); // Reset to show all events
+      return;
+    }
   
-  getEvents() {
-    this.httpService.GetAllevents().subscribe(
+    const query = this.searchQuery.trim();
+    if (!isNaN(Number(query))) {
+      // Search by ID
+      this.searchById(Number(query));
+    } else {
+      // Search by title
+      this.searchByTitle(query);
+    }
+  }
+  
+  searchById(id: number) {
+    this.httpService.getEventById(id).subscribe(
       (data) => {
-        this.eventList = data;
-        this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
-        this.setPaginatedEvents();
+        this.searchResults = data ? [data] : [];
+        this.updatePagination(this.searchResults);
       },
-      error => {
-        this.showError = true;
-        this.errorMessage = error.message || 'Failed to load events';
+      (error) => {
+        console.error('Error searching by ID:', error);
+        this.searchResults = [];
+        this.updatePagination(this.searchResults);
       }
     );
+  }
+  
+  searchByTitle(title: string) {
+    this.httpService.getEventsByTitle(title).subscribe(
+      (data) => {
+        this.searchResults = data;
+        this.updatePagination(this.searchResults);
+      },
+      (error) => {
+        console.error('Error searching by title:', error);
+        this.searchResults = [];
+        this.updatePagination(this.searchResults);
+      }
+    );
+  }
+  
+  updatePagination(results: any[]) {
+    this.eventList = results;
+    this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.setPaginatedEvents();
+  }
+
+
+
+  getEvents() {
+    if (this.searchResults.length > 0) {
+      this.eventList = this.searchResults;
+      this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+      this.setPaginatedEvents();
+    } else {
+      this.httpService.GetAllevents().subscribe(
+        (data) => {
+          this.eventList = data;
+          this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+          this.setPaginatedEvents();
+        },
+        error => {
+          this.showError = true;
+          this.errorMessage = error.message || 'Failed to load events';
+        }
+      );
+    }
   }
 
   setPaginatedEvents() {
@@ -244,31 +205,37 @@ export class CreateEventComponent implements OnInit {
 
   onSubmit() {
     if (this.itemForm.valid) {
-      this.httpService.createEvent(this.itemForm.value).subscribe(
+      const formData = { ...this.itemForm.value };
+      formData.dateTime = new Date(formData.dateTime).toISOString();
+      this.httpService.createEvent(formData).subscribe(
         data => {
-          alert('Event created successfully');
-          console.log('Event created:', data);
-          this.responseMessage = data;
+          this.responseMessage = 'Event created successfully';
           this.showMessage = true;
           this.itemForm.reset();
           this.getEvents();
+          this.autoCloseAlert();
         },
         error => {
-          this.errorMessage = error;
+          this.errorMessage = 'An error occurred: ' + error;
           this.showError = true;
+          this.autoCloseAlert();
         }
       );
     } else {
       this.markFormGroupTouched(this.itemForm);
     }
   }
-
-  private getTomorrowDate(): string {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
-    return tomorrow.toISOString().slice(0, 16);
+  
+  autoCloseAlert() {
+    setTimeout(() => {
+      this.closeAlert();
+    }, 5000); // Auto close after 5 seconds
   }
+  closeAlert() {
+    this.showMessage = false;
+    this.showError = false;
+  }
+  
 
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {

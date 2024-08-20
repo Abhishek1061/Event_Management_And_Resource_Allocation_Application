@@ -12,6 +12,8 @@ import { AddResourceComponent } from './add-resource/add-resource.component';
 import { ResourceAllocateComponent } from './resource-allocate/resource-allocate.component';
 import { ViewEventsComponent } from './view-events/view-events.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,9 +23,9 @@ const routes: Routes = [
   { path: 'add-resource', component: AddResourceComponent }, 
   { path: 'resource-allocate', component: ResourceAllocateComponent },  
   { path: 'view-events', component: ViewEventsComponent },  
-  { path: 'booking-details', component: BookingDetailsComponent },   
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-
+  { path: 'booking-details', component: BookingDetailsComponent },
+  { path: 'landing-page', component: LandingPageComponent },
+  { path: '', redirectTo: '/landing-page', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
 

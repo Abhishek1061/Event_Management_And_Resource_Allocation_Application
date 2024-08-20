@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 this.passwordEncoder = passwordEncoder;
         }
 
+        
+
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
                 auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
@@ -57,10 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers(HttpMethod.GET, "/api/planner/resources").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.POST, "/api/planner/allocate-resources").hasAuthority("PLANNER")
                                 .antMatchers(HttpMethod.DELETE, "/api/planner/event/{eventId}").hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.GET, "/api/planner/event-details/{eventId}").hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.GET, "/api/planner/event-detail/{title}").hasAuthority("PLANNER")
+                                .antMatchers(HttpMethod.GET, "/api/staff/event-detailsbyTitle/{title}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.GET, "/api/staff/event-details/{eventId}").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.PUT, "/api/staff/update-setup/{eventId}").hasAuthority("STAFF")
-                                .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}")
-                                .hasAuthority("CLIENT")
+                                .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}").hasAuthority("CLIENT")
                                 .antMatchers(HttpMethod.GET, "/api/staff/allEvents").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.GET, "/api/client/allEvents").hasAuthority("CLIENT")
                                 .anyRequest().authenticated()

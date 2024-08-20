@@ -22,7 +22,7 @@ export class ViewEventsComponent implements OnInit {
   minDate : string;
   message: { type: 'success' | 'error', text: string } | null = null;
   searchPerformed: boolean = false;
-
+ 
   paginatedEvents: any[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 3;
@@ -85,7 +85,7 @@ export class ViewEventsComponent implements OnInit {
   //     }
   //   );
   // }
-
+ 
   getEvents() {
     this.httpService.GetEvents().subscribe(
       (data) => {
@@ -99,20 +99,20 @@ export class ViewEventsComponent implements OnInit {
       }
     );
   }
-
+ 
   setPaginatedEvents() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedEvents = this.eventList.slice(startIndex, endIndex);
   }
-
+ 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.setPaginatedEvents();
     }
   }
-
+ 
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -120,40 +120,72 @@ export class ViewEventsComponent implements OnInit {
     }
   }
  
+  // searchEvent(): void {
+  //   if (this.itemForm.get('searchTerm')?.valid) {
+  //     const searchTerm = this.itemForm.get('searchTerm')?.value;
+  //     console.log('Search Term:', searchTerm); // Log the search term
+  //     this.httpService.GetEventdetails(searchTerm).subscribe(
+  //       (response) => {
+  //         console.log('Response:', response); // Log the response
+  //         this.handleSearchResponse(response);
+  //         this.errorMessage = '';
+  //         if (response.length !== 0) {
+  //           this.eventObj = response;
+  //           this.showMessage = true;
+  //           this.responseMessage = 'Event found';
+  //           this.showError = false;
+  //           this.eventList = [response]; // Update eventList with search result
+  //         } else {
+  //           this.responseMessage = '';
+  //           this.showMessage = false;
+  //           this.showError = true;
+  //           this.errorMessage = 'Failed to find event';
+  //           console.error('Error searching event:', response);
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error('Error:', error); // Log the error
+  //         this.handleSearchError(error);
+  //         this.showError = true;
+  //         this.errorMessage = 'Failed to find event';
+  //       }
+  //     );
+  //   } else {
+  //     this.itemForm.get('searchTerm')?.markAsTouched();
+  //   }
+  // }
   searchEvent(): void {
     if (this.itemForm.get('searchTerm')?.valid) {
       const searchTerm = this.itemForm.get('searchTerm')?.value;
       this.httpService.GetEventdetails(searchTerm).subscribe(
         (response) => {
-          this.handleSearchResponse(response),
-         
-          this.errorMessage = '';
-          if (response.length !== 0) {
-            console.log(response);
-            this.eventObj = response;
-            this.showMessage = true;
-            this.responseMessage = 'Event found';
-            this.showError = false;
+          this.handleSearchResponse(response);
+          if (response && Object.keys(response).length !== 0) {
             this.eventList = [response]; // Update eventList with search result
+            this.totalPages = 1;
+            this.currentPage = 1;
+            this.setPaginatedEvents();
           } else {
-            this.responseMessage = '';
-            this.showMessage = false;
-            this.showError = true;
-            this.errorMessage = 'Failed to find event';
-            console.error('Error searching event:', response);
+            this.eventList = [];
+            this.paginatedEvents = [];
+            this.totalPages = 0;
+            this.currentPage = 0;
           }
         },
         (error) => {
-          this.handleSearchError(error)
-          this.showError = true;
-          this.errorMessage = 'Failed to find event';
-          console.error('Error searching event:', error);
+          this.handleSearchError(error);
+          this.eventList = [];
+          this.paginatedEvents = [];
+          this.totalPages = 0;
+          this.currentPage = 0;
         }
       );
     } else {
       this.itemForm.get('searchTerm')?.markAsTouched();
     }
   }
+ 
+ 
  
   onSubmit() {
     if (this.itemForm.valid) {
@@ -243,6 +275,9 @@ export class ViewEventsComponent implements OnInit {
   }
   onFilterChange(event: any): void {
     const filterValue = event.target.value;
+    this.currentPage = 1;
+  this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+  this.setPaginatedEvents();
     switch (filterValue) {
       case 'past':
         this.filterPastEvents();
@@ -277,7 +312,7 @@ export class ViewEventsComponent implements OnInit {
     this.eventList.sort((a, b) => a.location.localeCompare(b.location));
     this.updatePaginatedEvents();
   }
-
+ 
   updatePaginatedEvents(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -286,6 +321,8 @@ export class ViewEventsComponent implements OnInit {
  
   onSortChange(event: any): void {
     const sortValue = event.target.value;
+    this.currentPage = 1;
+  this.setPaginatedEvents();
     switch (sortValue) {
       case 'title':
         this.sortByTitle();
@@ -302,13 +339,28 @@ export class ViewEventsComponent implements OnInit {
     }
   }
  
+  // private handleSearchResponse(response: any): void {
+  //   this.searchPerformed = true;
+  //   if (response && Object.keys(response).length !== 0) {
+  //     this.eventObj = [response];
+  //     this.showTemporaryMessage('success', 'Event found');
+  //   } else {
+  //     this.eventObj = [];
+  //     this.showTemporaryMessage('error', 'No event found');
+  //   }
+  // }
+ 
+  // private handleSearchError(error: any): void {
+  //   this.searchPerformed = true;
+  //   this.showTemporaryMessage('error', 'Failed to find event');
+  //   this.eventObj = [];
+  //   console.error('Error searching event:', error);
+  // }
   private handleSearchResponse(response: any): void {
     this.searchPerformed = true;
     if (response && Object.keys(response).length !== 0) {
-      this.eventObj = [response];
       this.showTemporaryMessage('success', 'Event found');
     } else {
-      this.eventObj = [];
       this.showTemporaryMessage('error', 'No event found');
     }
   }
@@ -316,10 +368,8 @@ export class ViewEventsComponent implements OnInit {
   private handleSearchError(error: any): void {
     this.searchPerformed = true;
     this.showTemporaryMessage('error', 'Failed to find event');
-    this.eventObj = [];
     console.error('Error searching event:', error);
   }
- 
   private showTemporaryMessage(type: 'success' | 'error', text: string): void {
     this.message = { type, text };
     setTimeout(() => {

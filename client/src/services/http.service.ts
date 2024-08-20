@@ -12,6 +12,24 @@ export class HttpService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  getEventById(id: number): Observable<any> {
+    const url = `${this.serverName}/api/planner/event-details/${id}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(url, { headers });
+  }
+  
+  getEventsByTitle(title: string): Observable<any[]> {
+    const url = `${this.serverName}/api/planner/event-detail/${title}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get<any[]>(url, { headers });
+  }
+
   getBookingDetails(eventId: any): Observable<any> {
     const url = `${this.serverName}/api/client/booking-details/${eventId}`;
     const headers = new HttpHeaders({
@@ -41,6 +59,15 @@ export class HttpService {
 
   GetAllevents(): Observable<any> {
     const url = `${this.serverName}/api/planner/events`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(url, { headers });
+  }
+
+  GetEventdetailsbyTitle(title: any): Observable<any> {
+    const url = `${this.serverName}/api/staff/event-detailsbyTitle/${title}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.authService.getToken()}`

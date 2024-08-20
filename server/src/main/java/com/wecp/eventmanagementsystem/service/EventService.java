@@ -49,4 +49,13 @@ public class EventService {
     }
 
 
+    public List<Event> getAllEventByTitle(String title) {
+        return eventRepository.findByTitle(title);
+    }
+
+    public Event getAllEventByTitles(String title) {
+        return eventRepository.findEventByTitle(title);
+    }
+
+
 }

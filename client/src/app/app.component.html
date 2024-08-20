@@ -1,196 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular Event Management System</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-        <a class="navbar-brand" >Angular Event Management System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item" *ngIf="roleName === 'PLANNER'">
-                    <a class="nav-link" [routerLink]="['/create-event']">Create Event</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'PLANNER'">
-                    <a class="nav-link" [routerLink]="['/add-resource']">Add Resources</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'PLANNER'">
-                    <a class="nav-link" [routerLink]="['/resource-allocate']">Resource Allocate</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'CLIENT'">
-                    <a class="nav-link" [routerLink]="['/booking-details']">Booking Details</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'STAFF'">
-                    <a class="nav-link" [routerLink]="['/view-events']">View Events</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item" *ngIf="!IsLoggin">
-                    <a class="nav-link" [routerLink]="['/login']">Login</a>
-                </li>
-                <li class="nav-item" *ngIf="IsLoggin">
-                    <a class="nav-link" (click)="logout()" [routerLink]="['/login']">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-4 mx-5">
-        <router-outlet></router-outlet>
-    </div>
-   
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html> -->
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular Event Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #0082e6;
-            --secondary-color: #0f86e1;
-            --text-color: #000000;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .navbar {
-            background-color: var(--primary-color);
-            padding: 0.5rem 1rem;
-        }
-
-        .navbar-brand {
-            color: var(--text-color);
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-brand img {
-            height: 150px; /* Increased from 40px to 60px */
-            margin-right: 15px;
-        }
-
-        .navbar-nav .nav-link {
-            color: var(--text-color);
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            background-color: var(--secondary-color);
-        }
-
-        .navbar-toggler {
-            border-color: var(--text-color);
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-
-        .btn-login,
-        .btn-register {
-            color: var(--text-color);
-            border: 1px solid var(--text-color);
-            margin-left: 0.5rem;
-        }
-
-        .btn-login:hover,
-        .btn-register:hover {
-            background-color: var(--text-color);
-            color: var(--primary-color);
-        }
-
-        @media (max-width: 991.98px) {
-            .navbar-nav {
-                background-color: var(--primary-color);
-                padding: 1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="assets/prilogo.png" alt="Logo"> 
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item" *ngIf="roleName === 'PLANNER'">
-                        <a class="nav-link" [routerLink]="['/create-event']">
-                            <i class="bi bi-calendar-plus"></i> Create Event
-                        </a>
-                    </li>
-                    <li class="nav-item" *ngIf="roleName === 'PLANNER'">
-                        <a class="nav-link" [routerLink]="['/add-resource']">
-                            <i class="bi bi-plus-circle"></i> Add Resources
-                        </a>
-                    </li>
-                    <li class="nav-item" *ngIf="roleName === 'PLANNER'">
-                        <a class="nav-link" [routerLink]="['/resource-allocate']">
-                            <i class="bi bi-diagram-3"></i> Resource Allocate
-                        </a>
-                    </li>
-                    <li class="nav-item" *ngIf="roleName === 'CLIENT'">
-                        <a class="nav-link" [routerLink]="['/booking-details']">
-                            <i class="bi bi-book"></i> Booking Details
-                        </a>
-                    </li>
-                    <li class="nav-item" *ngIf="roleName === 'STAFF'">
-                        <a class="nav-link" [routerLink]="['/view-events']">
-                            <i class="bi bi-eye"></i> View Events
-                        </a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <button class="btn btn-login" *ngIf="!IsLoggin" [routerLink]="['/login']">
-                        <i class="bi bi-box-arrow-in-right"></i> Login
-                    </button>
-                    <button class="btn btn-register" *ngIf="!IsLoggin" [routerLink]="['/register']">
-                        <i class="bi bi-person-plus"></i> Register
-                    </button>
-                    <button class="btn btn-login" *ngIf="IsLoggin" (click)="logout()" [routerLink]="['/login']">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-        <router-outlet></router-outlet>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -203,6 +10,11 @@
     <link rel="stylesheet" href="app.component.scss">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Italiana&family=Luxurious+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 </head>
@@ -211,7 +23,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="assets/Images/Logo.png" alt="Logo">
+                <img src="assets/Images/Logo.png" alt="Logo" >
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -262,7 +74,7 @@
     <div class="container-fluid mt-4">
         <router-outlet></router-outlet>
     </div>
-    <footer class="bg-dark text-white text-center text-lg-start">
+    <footer class="bg-dark text-white text-center text-lg-start" id="footer">
         <div class="container p-8">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
@@ -311,93 +123,3 @@
 
 </html>
 
-
-<!-- <div id="planner-info" class="mt-5">
-        <h2>Planner Information</h2>
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-inner">
-
-                <div class="carousel-item active">
-                    <img src="https://cdn.pixabay.com/photo/2016/07/05/19/59/christening-1499314_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Birthday Party">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Birthday Party</h5>
-                        <p>Details about birthday party planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2022/01/10/04/37/event-6927353_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Wedding">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Wedding</h5>
-                        <p>Details about wedding planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2023/06/21/20/05/party-8080105_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Corporate Event">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Corporate Event</h5>
-                        <p>Details about corporate event planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/06/13/29/concert-974418_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Concert">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Concert</h5>
-                        <p>Details about concert planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2017/01/07/19/42/incense-1961430_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Cultural Event">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Cultural Event</h5>
-                        <p>Details about cultural event planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2014/09/14/23/31/bike-race-446154_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Sports Event">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Sports Event</h5>
-                        <p>Details about sports event planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/21/08/22/scarf-2771101_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Charity Event">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Charity Event</h5>
-                        <p>Details about charity event planning.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2014/10/14/20/14/library-488690_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Educational Event">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Educational Event</h5>
-                        <p>Details about educational event planning.</p>
-                    </div>
-                <div class="carousel-item">
-                    <img src="https://cdn.pixabay.com/photo/2016/07/16/10/37/table-1521278_1280.jpg" class="d-block w-100" style="height: 300px; object-fit: cover; margin: 0;" alt="Private Event">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Private Event</h5>
-                        <p>Details about private event planning.</p>
-                    </div>
-                </div>
-            </div>
-            </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-    
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function scrollToPlanner() {
-            document.getElementById('planner-info').scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>  -->

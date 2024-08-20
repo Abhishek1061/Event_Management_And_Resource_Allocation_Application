@@ -17,6 +17,12 @@ export class ResourceAllocateComponent implements OnInit {
   showMessage: boolean = false;
   responseMessage: string = '';
   eventList: any[] = [];
+  paginatedResources: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 4;
+  totalPages: number = 1;
+  isSuccess: boolean = false;
+  showPopup: boolean = false;
 
   constructor(
     private router: Router,
@@ -40,34 +46,53 @@ export class ResourceAllocateComponent implements OnInit {
     if (this.itemForm.valid) {
       this.httpService.allocateResources(this.itemForm.value.eventId, this.itemForm.value.resourceId, this.itemForm.value).subscribe(
         data => {
-          this.responseMessage = data;
-          this.showMessage = true;
+          this.showSuccessMessage(data.message);
           this.itemForm.reset();
         },
         error => {
           if (error.status === 409) {
-            this.errorMessage = error.error.message;
-            this.showError = true;
+            this.showErrorMessage(error.error.message);
+          } else {
+            this.showErrorMessage('An error occurred');
           }
-          // this.errorMessage = error.message || 'An error occurred';
-          
         }
       );
+    } else {
+      this.showErrorMessage('Please fill all required fields');
     }
   }
 
-
-
   getResources() {
     this.httpService.GetAllResources().subscribe(
-      data => {
+      (data) => {
         this.resourceList = data;
+        this.totalPages = Math.ceil(this.resourceList.length / this.itemsPerPage);
+        this.setPaginatedResources();
       },
-      error => {
-        this.errorMessage = error.message || 'Failed to load resources';
-        this.showError = true;
+      (error) => {
+        this.showErrorMessage(error.message || 'Failed to load resources');
       }
     );
+  }
+
+  setPaginatedResources() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedResources = this.resourceList.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.setPaginatedResources();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.setPaginatedResources();
+    }
   }
 
   getEvent() {
@@ -76,9 +101,26 @@ export class ResourceAllocateComponent implements OnInit {
         this.eventList = data;
       },
       error => {
-        this.errorMessage = error.message || 'Failed to load events';
-        this.showError = true;
+        this.showErrorMessage(error.message || 'Failed to load events');
       }
     );
+  }
+
+  showSuccessMessage(message: string) {
+    this.responseMessage = message;
+    this.isSuccess = true;
+    this.showMessage = true;
+    setTimeout(() => {
+      this.showMessage = false;
+    }, 3000); // Message will disappear after 3 seconds
+  }
+  
+  showErrorMessage(message: string) {
+    this.errorMessage = message;
+    this.isSuccess = false;
+    this.showError = true;
+    setTimeout(() => {
+      this.showError = false;
+    }, 3000); // Message will disappear after 3 seconds
   }
 }
