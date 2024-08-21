@@ -46,7 +46,8 @@
 <!-- </div> -->
 
 <div class="d-flex justify-content-center" *ngIf="roleName === 'PLANNER'">
-  <div class="card" style="width: 18rem; margin: 10px;">
+  <app-landing-page></app-landing-page>
+  <!-- <div class="card" style="width: 18rem; margin: 10px;">
     <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
@@ -134,12 +135,12 @@
         content.</p>
       <a href="resource-allocate" class="btn btn-primary">Allocate Resource</a>
     </div>
-  </div>
+  </div> -->
   
 </div>
 
 <div *ngIf="roleName === 'STAFF'">
-  <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+  <!-- <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="https://cdn.pixabay.com/photo/2024/08/13/20/20/christmas-8967055_1280.jpg" class="d-block w-100"
@@ -169,13 +170,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <app-landing-page></app-landing-page>
 </div>
 
 
 <!-- <CLIENT> -->
 <div *ngIf="roleName === 'CLIENT'">
-  <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+  <!-- <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="https://cdn.pixabay.com/photo/2016/12/20/13/06/hanging-files-1920437_1280.jpg" class="d-block w-100"
@@ -205,5 +207,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <app-landing-page></app-landing-page>
 </div>

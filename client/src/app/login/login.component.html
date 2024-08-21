@@ -16,7 +16,7 @@
         <!-- Left column content remains the same -->
         <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
           <div>
-            <img src="assets/Images/Logo.png" alt="Logo" id="logo"> 
+            <img src="assets/Images/Logo.png" alt="Logo" id="logo">
           </div>
           <!-- <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)" >
             ELITE EVENTS <br />
@@ -24,11 +24,11 @@
           <h2>
             <span style="color: hsl(218, 81%, 75%)">Event Management And Resource Allocations Application</span>
           </h2> -->
-          <h1 class="my-5 display-5 fw-bold ls-tight" class="glitch" cla >
+          <h1 class="my-5 display-5 fw-bold ls-tight" class="glitch" cla>
             ELITE EVENTS <br />
           </h1>
           <h2>
-            <span  class="scanlines" >Event Management And Resource Allocations Application</span>
+            <span class="scanlines">Event Management And Resource Allocations Application</span>
           </h2>
           <h5 class="mb-7 opacity-70" style="color: hsl(0, 0%, 100%)">
             Elite Events: Crafting Unforgettable Experiences, One Event at a Time.
@@ -71,7 +71,8 @@
                   <!-- <small *ngIf="itemForm.get('password')?.hasError('pattern') && itemForm.get('password')?.touched"
                     class="text-danger">Password must contain at least one number, one uppercase and lowercase letter, one special character, and be 8-20 characters long</small> -->
                 </div>
-                <button id="login-button" type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Log In</button>
+                <button id="login-button" type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Log
+                  In</button>
               </form>
 
               <br>
@@ -80,7 +81,8 @@
                 <p>Don't have an account? <a [routerLink]="['/registration']">Sign up</a></p>
               </div>
 
-              <div *ngIf="showMessage" class="alert" [ngClass]="{'alert-success': !showError, 'alert-danger': showError}" role="alert">
+              <div *ngIf="showMessage" class="alert"
+                [ngClass]="{'alert-success': !showError, 'alert-danger': showError}" role="alert">
                 {{responseMessage}}
               </div>
             </div>
@@ -89,10 +91,52 @@
       </div>
     </div>
   </section>
+  <footer class="bg-dark text-white text-center text-lg-start" id="footer"  >
+    <div class="container p-8">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Contact Us</h5>
+          <p>
+            123 Event Street, Event City, EV 12345<br>
+            Phone: (123) 456-7890<br>
+            Email: info@eliteevents.com
+          </p>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Follow Us</h5>
+          <a class="me-3">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a class="me-3">
+            <i class="bi bi-twitter"></i>
+          </a>
+          <a class="me-3">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a class="me-3">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </div>
+
+        <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase">About Us</h5>
+          <p>
+            Elite Events is a premier event management and resource allocation application. We provide
+            top-notch services to ensure your events are successful and memorable.
+          </p>
+          <!-- <img src="/assets/Images/logo.png" alt="Elite Events Logo" class="img-fluid"> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2024 Elite Events. All rights reserved.
+    </div>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
-

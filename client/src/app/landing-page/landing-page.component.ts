@@ -13,6 +13,24 @@ import { gsap } from "gsap";
 })
 
 export class LandingPageComponent implements OnInit {
+
+    IsLoggin: boolean = false;
+    roleName: string | null;
+  
+    constructor(private authService: AuthService, private router: Router) {
+      this.IsLoggin = authService.getLoginStatus;
+      this.roleName = authService.getRole;
+      if (this.IsLoggin == false) {
+        this.router.navigateByUrl('/landing-page');
+      }
+    }
+  
+    logout() {
+      this.authService.logout();
+      window.location.reload();
+    }
+
+    
     ngOnInit(): void {
 
         //cursor
@@ -143,4 +161,6 @@ export class LandingPageComponent implements OnInit {
             ease: "power1.inOut" // Easing function for smooth animation
         });
     }
+
+    
 }
