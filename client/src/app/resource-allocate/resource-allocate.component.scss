@@ -7,6 +7,9 @@ html, body {
     overflow: hidden;
 }
  
+.validation-message {
+    color: #e74c3c;
+}
 body {
     background-size: cover;
     background-position: center;
@@ -204,7 +207,7 @@ body {
 }
 .alert-container {
     position: fixed;
-    top: 20px;
+    top: 70px;
     right: 20px;
     z-index: 9999;
     display: flex;

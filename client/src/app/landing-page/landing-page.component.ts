@@ -43,7 +43,7 @@ export class LandingPageComponent implements OnInit {
             setTimeout(() => {
                 circle.style.top = `${yValue}px`;
                 circle.style.left = `${xValue}px`;
-            }, 90);
+            }, 100);
         });
 
         //loader

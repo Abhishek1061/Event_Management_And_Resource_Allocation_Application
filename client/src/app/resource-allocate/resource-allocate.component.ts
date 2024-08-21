@@ -42,25 +42,7 @@ export class ResourceAllocateComponent implements OnInit {
     this.getEvent();
   }
 
-  onSubmit() {
-    if (this.itemForm.valid) {
-      this.httpService.allocateResources(this.itemForm.value.eventId, this.itemForm.value.resourceId, this.itemForm.value).subscribe(
-        data => {
-          this.showSuccessMessage(data.message);
-          this.itemForm.reset();
-        },
-        error => {
-          if (error.status === 409) {
-            this.showErrorMessage(error.error.message);
-          } else {
-            this.showErrorMessage('An error occurred');
-          }
-        }
-      );
-    } else {
-      this.showErrorMessage('Please fill all required fields');
-    }
-  }
+
 
   getResources() {
     this.httpService.GetAllResources().subscribe(
@@ -114,7 +96,7 @@ export class ResourceAllocateComponent implements OnInit {
       this.showMessage = false;
     }, 3000); // Message will disappear after 3 seconds
   }
-  
+
   showErrorMessage(message: string) {
     this.errorMessage = message;
     this.isSuccess = false;
@@ -122,5 +104,38 @@ export class ResourceAllocateComponent implements OnInit {
     setTimeout(() => {
       this.showError = false;
     }, 3000); // Message will disappear after 3 seconds
+  }
+
+
+  onSubmit() {
+    if (this.itemForm.valid) {
+      this.httpService.allocateResources(this.itemForm.value.eventId, this.itemForm.value.resourceId, this.itemForm.value).subscribe(
+        data => {
+          this.showSuccessMessage(data.message);
+          this.itemForm.reset();
+        },
+        error => {
+          if (error.status === 409) {
+            this.showErrorMessage(error.error.message);
+          } else {
+            this.showErrorMessage('An error occurred');
+          }
+        }
+      );
+    } else {
+      // Form is invalid, display error messages
+      this.markFormGroupTouched(this.itemForm);
+    }
+  }
+
+  // Helper function to mark all controls in the form group as touched
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 }

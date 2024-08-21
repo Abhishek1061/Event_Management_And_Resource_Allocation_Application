@@ -27,23 +27,6 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // public User registerUser(User user){
-    // return userRepository.save(user);
-    // }
-
-    // public User registerUser(User user) {
-
-    // User oldUser = userRepository.findByUsername(user.getUsername());
-    // if (oldUser != null) {
-    // throw new RuntimeException("User name Is Unavailable: " +
-    // user.getUsername());
-
-    // }
-    // user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-    // return userRepository.save(user);
-    // }
-
     public User registerUser(User user) {
         if ((userRepository.existsByUsername(user.getUsername())) && (userRepository.existsByEmail(user.getEmail()))) {
             throw new UserExistsException("User alreay exists! Please try another username and Email");

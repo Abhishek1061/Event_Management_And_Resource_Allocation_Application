@@ -21,21 +21,6 @@
     <div class="bubble bubble-8"></div>
     <div class="bubble bubble-9"></div>
     <div class="bubble bubble-10"></div>
-<!--  
-    <div *ngIf="showError" class="alert alert-danger mt-4 mx-auto animate__animated animate__shakeX" role="alert"
-        style="max-width: 600px;">
-        {{ errorMessage }}
-    </div> -->
-    <!-- <div *ngIf="showSuccess" class="alert alert-success mt-3 animate__animated animate__fadeIn"
-    role="alert">
-    {{ successMessage }}
-</div>
-
-
-<div *ngIf="showError" class="alert alert-danger mt-4 mx-auto animate__animated animate__shakeX"
-    role="alert" style="max-width: 600px;">
-    {{ errorMessage }}
-</div> -->
 <div class="alert-container">
     <div *ngIf="showSuccess" class="alert alert-success animate__animated animate__fadeInRight" role="alert">
         {{ successMessage }}
@@ -63,12 +48,18 @@
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter Resource Name"
                                     formControlName="name">
+                                    <div *ngIf="itemForm.controls['name'].invalid && (itemForm.controls['name'].dirty || itemForm.controls['name'].touched)"class="validation-message">
+                                    Name is required.
+                                  </div>
                             </div>
  
                             <div class="mb-3">
                                 <label for="type" class="form-label">Type</label>
                                 <input type="text" class="form-control" id="type" placeholder="Enter Resource Type"
                                     formControlName="type">
+                                    <div *ngIf="itemForm.controls['type'].invalid && (itemForm.controls['type'].dirty || itemForm.controls['type'].touched)"class="validation-message">
+                                        Type is required.
+                                      </div>
                             </div>
  
                             <div class="mb-3">
@@ -84,6 +75,10 @@
                                             formControlName="availability" [value]="false">
                                         <label class="form-check-label" for="unavailable">Unavailable</label>
                                     </div>
+                                    
+                                </div>
+                                <div *ngIf="itemForm.controls['availability'].invalid && (itemForm.controls['availability'].dirty || itemForm.controls['availability'].touched)" class="validation-message">
+                                    Availability is required.
                                 </div>
                             </div>
  
@@ -91,17 +86,7 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
-                        <!-- Add this just below the form in the card body -->
-                        <!-- <div *ngIf="showSuccess" class="alert alert-success mt-3 animate__animated animate__fadeIn"
-                            role="alert">
-                            {{ successMessage }}
-                        </div>
- 
                         
-                        <div *ngIf="showError" class="alert alert-danger mt-4 mx-auto animate__animated animate__shakeX"
-                            role="alert" style="max-width: 600px;">
-                            {{ errorMessage }}
-                        </div> -->
                     </div>
                 </div>
  
@@ -123,7 +108,7 @@
                                 resource.availability ? 'Available' : 'Unavailable' }}
                             </li>
                         </ul>
-                        <div *ngIf="paginatedResources && paginatedResources.length === 0" class="text-center mt-3">
+                        <div *ngIf="paginatedResources && paginatedResources.length === 0" class="text-center mt-3" style="color: red;">
                             No resources found.
                         </div>
                     </div>

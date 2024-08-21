@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
 import { map, Observable, of } from 'rxjs';
- 
+
 @Component({
   selector: 'app-view-events',
   templateUrl: './view-events.component.html',
@@ -19,15 +19,15 @@ export class ViewEventsComponent implements OnInit {
   responseMessage: string = '';
   isUpdate: boolean = false;
   eventList: any[] = [];
-  minDate : string;
+  minDate: string;
   message: { type: 'success' | 'error', text: string } | null = null;
   searchPerformed: boolean = false;
- 
+
   paginatedEvents: any[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 3;
   totalPages: number = 1;
- 
+
   constructor(
     private httpService: HttpService,
     private formBuilder: FormBuilder,
@@ -36,12 +36,12 @@ export class ViewEventsComponent implements OnInit {
   ) {
     this.minDate = this.getTomorrowDate();
   }
- 
+
   ngOnInit(): void {
     this.initForm();
     this.getEvents();
   }
- 
+
   initForm(): void {
     this.itemForm = this.formBuilder.group({
       searchTerm: [''],
@@ -52,40 +52,30 @@ export class ViewEventsComponent implements OnInit {
       status: ['', Validators.required]
     });
   }
- 
+
   dateTimeValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const tomorrow = new Date(this.minDate);
-   
+
     if (isNaN(selectedDate.getTime())) {
       return { invalidDate: true };
     }
-   
+
     if (selectedDate < tomorrow) {
       return { dateInPast: true };
     }
-   
+
     return null;
   }
- 
+
   private getTomorrowDate(): string {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0, 0, 0, 0);
     return tomorrow.toISOString().slice(0, 16);
   }
-  // getEvents() {
-  //   this.httpService.GetEvents().subscribe(
-  //     (data) => {
-  //       this.eventList = data;
-  //     },
-  //     error => {
-  //       this.showError = true;
-  //       this.errorMessage = error.message || 'Failed to load events';
-  //     }
-  //   );
-  // }
- 
+
+
   getEvents() {
     this.httpService.GetEvents().subscribe(
       (data) => {
@@ -99,94 +89,88 @@ export class ViewEventsComponent implements OnInit {
       }
     );
   }
- 
+
   setPaginatedEvents() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedEvents = this.eventList.slice(startIndex, endIndex);
   }
- 
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.setPaginatedEvents();
     }
   }
- 
+
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.setPaginatedEvents();
     }
   }
- 
-  // searchEvent(): void {
-  //   if (this.itemForm.get('searchTerm')?.valid) {
-  //     const searchTerm = this.itemForm.get('searchTerm')?.value;
-  //     console.log('Search Term:', searchTerm); // Log the search term
-  //     this.httpService.GetEventdetails(searchTerm).subscribe(
-  //       (response) => {
-  //         console.log('Response:', response); // Log the response
-  //         this.handleSearchResponse(response);
-  //         this.errorMessage = '';
-  //         if (response.length !== 0) {
-  //           this.eventObj = response;
-  //           this.showMessage = true;
-  //           this.responseMessage = 'Event found';
-  //           this.showError = false;
-  //           this.eventList = [response]; // Update eventList with search result
-  //         } else {
-  //           this.responseMessage = '';
-  //           this.showMessage = false;
-  //           this.showError = true;
-  //           this.errorMessage = 'Failed to find event';
-  //           console.error('Error searching event:', response);
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error('Error:', error); // Log the error
-  //         this.handleSearchError(error);
-  //         this.showError = true;
-  //         this.errorMessage = 'Failed to find event';
-  //       }
-  //     );
-  //   } else {
-  //     this.itemForm.get('searchTerm')?.markAsTouched();
-  //   }
-  // }
+
   searchEvent(): void {
     if (this.itemForm.get('searchTerm')?.valid) {
       const searchTerm = this.itemForm.get('searchTerm')?.value;
-      this.httpService.GetEventdetails(searchTerm).subscribe(
-        (response) => {
-          this.handleSearchResponse(response);
-          if (response && Object.keys(response).length !== 0) {
-            this.eventList = [response]; // Update eventList with search result
-            this.totalPages = 1;
-            this.currentPage = 1;
-            this.setPaginatedEvents();
-          } else {
+      if (isNaN(searchTerm)) {
+        // If searchTerm is a string, search by title
+        this.httpService.GetEventdetailsbyTitle(searchTerm).subscribe(
+          (response) => {
+            this.handleSearchResponse(response);
+            if (response && Object.keys(response).length !== 0) {
+              this.eventList = [response]; // Update eventList with search result
+              this.totalPages = 1;
+              this.currentPage = 1;
+              this.setPaginatedEvents();
+            } else {
+              this.eventList = [];
+              this.paginatedEvents = [];
+              this.totalPages = 0;
+              this.currentPage = 0;
+            }
+          },
+          (error) => {
+            this.handleSearchError(error);
             this.eventList = [];
             this.paginatedEvents = [];
             this.totalPages = 0;
             this.currentPage = 0;
           }
-        },
-        (error) => {
-          this.handleSearchError(error);
-          this.eventList = [];
-          this.paginatedEvents = [];
-          this.totalPages = 0;
-          this.currentPage = 0;
-        }
-      );
+        );
+      } else {
+        // If searchTerm is a number, search by ID
+        this.httpService.GetEventdetails(Number(searchTerm)).subscribe(
+          (response) => {
+            this.handleSearchResponse(response);
+            if (response && Object.keys(response).length !== 0) {
+              this.eventList = [response]; // Update eventList with search result
+              this.totalPages = 1;
+              this.currentPage = 1;
+              this.setPaginatedEvents();
+            } else {
+              this.eventList = [];
+              this.paginatedEvents = [];
+              this.totalPages = 0;
+              this.currentPage = 0;
+            }
+          },
+          (error) => {
+            this.handleSearchError(error);
+            this.eventList = [];
+            this.paginatedEvents = [];
+            this.totalPages = 0;
+            this.currentPage = 0;
+          }
+        );
+      }
     } else {
       this.itemForm.get('searchTerm')?.markAsTouched();
     }
   }
- 
- 
- 
+
+
+
   onSubmit() {
     if (this.itemForm.valid) {
       const eventData = this.itemForm.value;
@@ -210,12 +194,10 @@ export class ViewEventsComponent implements OnInit {
             this.errorMessage = 'An error occurred while updating the event: ' + error.message;
           }
         );
-        // const modalElement = document.getElementById('updateModal');
-        // const modal = bootstrap.Modal.getInstance(modalElement);
-        // modal?.hide();
- 
+
+
       } else {
- 
+
         // Add logic for creating a new event
         this.httpService.createEvent(eventData).subscribe(
           response => {
@@ -236,7 +218,7 @@ export class ViewEventsComponent implements OnInit {
       this.itemForm.markAllAsTouched();
     }
   }
- 
+
   edit(val: any) {
     this.isUpdate = true;
     this.eventObj = val;
@@ -247,16 +229,14 @@ export class ViewEventsComponent implements OnInit {
       location: val.location,
       status: val.status
     });
-    // Open the modal programmatically
-    // const modal = new bootstrap.Modal(document.getElementById('updateModal'));
-    // modal.show();
+    ;
   }
- 
+
   filterPastEvents(): void {
     const currentDate = new Date();
     this.eventList = this.eventList.filter(event => new Date(event.dateTime) < currentDate);
   }
- 
+
   filterTodayEvents(): void {
     const currentDate = new Date();
     this.eventList = this.eventList.filter(event => {
@@ -264,20 +244,17 @@ export class ViewEventsComponent implements OnInit {
       return eventDate.toDateString() === currentDate.toDateString();
     });
   }
- 
+
   filterFutureEvents(): void {
     const currentDate = new Date();
     this.eventList = this.eventList.filter(event => new Date(event.dateTime) > currentDate);
   }
- 
+
   viewAllEvents(): void {
     this.getEvents();
   }
   onFilterChange(event: any): void {
     const filterValue = event.target.value;
-    this.currentPage = 1;
-  this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
-  this.setPaginatedEvents();
     switch (filterValue) {
       case 'past':
         this.filterPastEvents();
@@ -292,18 +269,21 @@ export class ViewEventsComponent implements OnInit {
         this.viewAllEvents();
         break;
     }
+    this.currentPage = 1;
+    this.totalPages = Math.ceil(this.eventList.length / this.itemsPerPage);
+    this.setPaginatedEvents();
   }
- 
+
   sortByTitle(): void {
     this.eventList.sort((a, b) => a.title.localeCompare(b.title));
     this.updatePaginatedEvents();
   }
- 
+
   sortById(): void {
     this.eventList.sort((a, b) => a.eventID - b.eventID);
     this.updatePaginatedEvents();
   }
- 
+
   sortByDate(): void {
     this.eventList.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
     this.updatePaginatedEvents();
@@ -312,17 +292,17 @@ export class ViewEventsComponent implements OnInit {
     this.eventList.sort((a, b) => a.location.localeCompare(b.location));
     this.updatePaginatedEvents();
   }
- 
+
   updatePaginatedEvents(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedEvents = this.eventList.slice(startIndex, endIndex);
   }
- 
+
   onSortChange(event: any): void {
     const sortValue = event.target.value;
     this.currentPage = 1;
-  this.setPaginatedEvents();
+    this.setPaginatedEvents();
     switch (sortValue) {
       case 'title':
         this.sortByTitle();
@@ -338,24 +318,7 @@ export class ViewEventsComponent implements OnInit {
         break;
     }
   }
- 
-  // private handleSearchResponse(response: any): void {
-  //   this.searchPerformed = true;
-  //   if (response && Object.keys(response).length !== 0) {
-  //     this.eventObj = [response];
-  //     this.showTemporaryMessage('success', 'Event found');
-  //   } else {
-  //     this.eventObj = [];
-  //     this.showTemporaryMessage('error', 'No event found');
-  //   }
-  // }
- 
-  // private handleSearchError(error: any): void {
-  //   this.searchPerformed = true;
-  //   this.showTemporaryMessage('error', 'Failed to find event');
-  //   this.eventObj = [];
-  //   console.error('Error searching event:', error);
-  // }
+
   private handleSearchResponse(response: any): void {
     this.searchPerformed = true;
     if (response && Object.keys(response).length !== 0) {
@@ -364,7 +327,7 @@ export class ViewEventsComponent implements OnInit {
       this.showTemporaryMessage('error', 'No event found');
     }
   }
- 
+
   private handleSearchError(error: any): void {
     this.searchPerformed = true;
     this.showTemporaryMessage('error', 'Failed to find event');
@@ -376,17 +339,13 @@ export class ViewEventsComponent implements OnInit {
       this.message = null;
     }, 5000);
   }
- 
+
   resetForm(): void {
     this.isUpdate = false;
     this.itemForm.reset();
     this.eventObj = null;
     this.showError = false;
     this.showMessage = false;
-    // const modalElement = document.getElementById('updateModal');
-    // const modal = bootstrapApplication.Modal.getInstance(modalElement);
-    // modal?.hide();
   }
- 
+
 }
- 

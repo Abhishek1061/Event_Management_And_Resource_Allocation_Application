@@ -66,6 +66,15 @@ export class HttpService {
     return this.http.get(url, { headers });
   }
 
+  GetEventdetailsbyTitleforClient(title: any): Observable<any> {
+    const url = `${this.serverName}/api/client/event-detailsbyTitleforClient/${title}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+    return this.http.get(url, { headers });
+  }
+
   GetEventdetailsbyTitle(title: any): Observable<any> {
     const url = `${this.serverName}/api/staff/event-detailsbyTitle/${title}`;
     const headers = new HttpHeaders({
@@ -160,11 +169,6 @@ export class HttpService {
     headers = headers.set('Authorization', `Bearer ${authToken}`)
     return this.http.get(this.serverName + `/api/state/`, { headers: headers });
   }
-
-  // private handleError(error: any): Observable<never> {
-  //   console.error(error);
-  //   throw error;
-  // }
 
   getAllUsers(): Observable<any> {
     return this.http.get(`${this.serverName}/api/user/users`, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });

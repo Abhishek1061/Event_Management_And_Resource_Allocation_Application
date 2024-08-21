@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResourceRepository  extends JpaRepository<Resource, Long>{
-    // extend jpa repository and add custom method if needed
+
 }

@@ -37,21 +37,7 @@ export class CreateEventComponent implements OnInit {
   ) {
 
     this.minDate = this.getTomorrowDate();
-
-    // this.itemForm = this.formBuilder.group({
-    //   title: ['', Validators.required],
-    //   description: ['', Validators.required],
-    //   dateTime: ['', [Validators.required, this.dateTimeValidator.bind(this)]],
-    //   location: ['', Validators.required],
-    //   status: ['', Validators.required]
-    // });
   }
-
-  // ngOnInit(): void {
-  //   this.searchQuery = '';
-  //   this.getEvents();
-  // }
-
   ngOnInit(): void {
     this.searchQuery = '';
     this.getEvents();
@@ -89,12 +75,6 @@ export class CreateEventComponent implements OnInit {
     tomorrow.setDate(tomorrow.getDate() + 1);
     return tomorrow.toISOString().slice(0, 16);
   }
-  // private getTomorrowDate(): string {
-  //   const tomorrow = new Date();
-  //   tomorrow.setDate(tomorrow.getDate() + 1);
-  //   tomorrow.setHours(0, 0, 0, 0);
-  //   return tomorrow.toISOString().slice(0, 16);
-  // }
 
   onSearch() {
     if (!this.searchQuery.trim()) {
@@ -102,7 +82,7 @@ export class CreateEventComponent implements OnInit {
       return;
     }
   
-    const query = this.searchQuery.trim();
+    const query = this.searchQuery.trim().toLowerCase();
     if (!isNaN(Number(query))) {
       // Search by ID
       this.searchById(Number(query));

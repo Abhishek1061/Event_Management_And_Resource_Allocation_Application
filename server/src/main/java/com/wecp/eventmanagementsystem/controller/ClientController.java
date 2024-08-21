@@ -30,4 +30,11 @@ public class ClientController {
         // get all events and return the list with status code 200 (OK)
         return new ResponseEntity<List<Event>>(eventService.getAllEvents(),HttpStatus.OK);
     }
+
+    @GetMapping("/api/client/event-detailsbyTitleforClient/{title}")
+    public ResponseEntity<Event> getBookingDetailsbyTitle(@PathVariable String title) {
+        // get event details by event id and return with status code 200 OK
+        return new ResponseEntity<Event>(eventService.getAllEventByTitles(title), HttpStatus.OK);
+        
+    }
 }

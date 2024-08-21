@@ -3,9 +3,6 @@ package com.wecp.eventmanagementsystem.controller;
 
 import com.wecp.eventmanagementsystem.entity.Event;
 import com.wecp.eventmanagementsystem.service.EventService;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

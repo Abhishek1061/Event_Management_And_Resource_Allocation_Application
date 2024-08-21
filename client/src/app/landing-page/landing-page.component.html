@@ -26,14 +26,14 @@
         <div class="container"></div>
 
         <div id="main">
-            <div id="circle"></div>
+            <!-- <div id="circle"></div> -->
             <div id="content">
                 <div id="video-wrapper">
                     <video src="/assets/Images/EventsVideo.mp4" autoplay loop muted playsinline></video>
                 </div>
                 <div id="text-overlay">
                     <h1>CRAFTING</h1>
-                    <h1><span id="booknow" routerLink="/login" routerLinkActive="router-link-active">JOIN NOW</span></h1>
+                    <h1><span id="booknow" [routerLink]="['/login']" routerLinkActive="router-link-active" >JOIN NOW</span></h1>
                     <h1 id="unforget">UNFORGETTABLE</h1>
                     <h1 id="any">EXPERIENCES</h1>
                 </div>

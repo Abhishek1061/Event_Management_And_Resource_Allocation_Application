@@ -6,6 +6,10 @@ body {
     background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(81, 36, 121, 0.838) 50%, rgba(128, 112, 146, 0.258));
 }
  
+.validation-message {
+    color: #e74c3c;
+}
+
 .text-center {
     color: white;
 }
@@ -109,24 +113,10 @@ body {
         background-color: rgba(255, 255, 255, 0.9);
     }
 }
- 
-// .alert {
-//     margin-top: 0.5rem;
-//     animation-duration: 0.5s;
-//   }
- 
-//   .alert-success {
-//     background-color: rgba(40, 167, 69, 0.9);
-//     color: white;
-//   }
- 
-//   .alert-danger {
-//     background-color: rgba(220, 53, 69, 0.9);
-//     color: white;
-//   }
+
 .alert-container {
     position: fixed;
-    top: 20px;
+    top: 70px;
     right: 20px;
     width: 300px;
     z-index: 1050; /* Make sure the alerts appear above other content */

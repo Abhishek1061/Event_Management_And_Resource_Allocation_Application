@@ -67,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers(HttpMethod.GET, "/api/client/booking-details/{eventId}").hasAuthority("CLIENT")
                                 .antMatchers(HttpMethod.GET, "/api/staff/allEvents").hasAuthority("STAFF")
                                 .antMatchers(HttpMethod.GET, "/api/client/allEvents").hasAuthority("CLIENT")
+                                .antMatchers(HttpMethod.GET, "/api/client/event-detailsbyTitleforClient/{title}").hasAuthority("CLIENT")
                                 .anyRequest().authenticated()
                                 .and()
                                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

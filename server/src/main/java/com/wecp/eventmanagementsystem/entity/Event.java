@@ -1,9 +1,6 @@
 package com.wecp.eventmanagementsystem.entity;
 
-
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 import java.util.List;
@@ -25,18 +22,17 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Allocation> allocations;
 
-    
-
     public Event() {
     }
 
-    public Event(String title, String description, Date dateTime, String location, String status, List<Allocation> allocations) {
+    public Event(String title, String description, Date dateTime, String location, String status,
+            List<Allocation> allocations) {
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
         this.location = location;
         this.status = status;
-        this.allocations =allocations;
+        this.allocations = allocations;
     }
 
     public Long getEventID() {
@@ -95,5 +91,4 @@ public class Event {
         this.allocations = allocations;
     }
 
-    
 }

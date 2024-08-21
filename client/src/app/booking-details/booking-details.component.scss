@@ -1,137 +1,34 @@
-// .card {
-//   transition: all 0.3s ease;
-
-//   &:hover {
-//     transform: translateY(-5px);
-//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-//   }
-// }
-
-
-// .container {
-//   height: 400px;
-// }
-
-// .custom-tooltip {
-//   position: fixed;
-//   background-color: white;
-//   border: 1px solid #ccc;
-//   border-radius: 4px;
-//   padding: 15px;
-//   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-//   z-index: 1000;
-//   max-width: 300px;
-//   transition: all 0.3s ease;
-// }
-
-// .custom-tooltip p {
-//   margin-bottom: 8px;
-// }
-
-// .custom-tooltip hr {
-//   margin: 12px 0;
-//   border-top: 1px solid #eee;
-// }
-
-// .allocation-info {
-//   cursor: pointer;
-//   color: #007bff;
-//   text-decoration: underline;
-
-//   &:hover {
-//     color: #0056b3;
-//   }
-// }
-
-// .badge {
-//   font-size: 0.9em;
-//   padding: 0.4em 0.6em;
-//   color: black;
-// }
-
-// .table {
-//   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-// }
-
-// .table thead th {
-//   border-top: none;
-// }
-
-// .table-hover tbody tr:hover {
-//   background-color: rgba(0, 123, 255, 0.1);
-// }
-
-
-// .bubble {
-//   position: absolute;
-//   border-radius: 50%;
-//   opacity: 0.3;
-//   animation: float 20s infinite ease-in-out;
-// }
-
-// @for $i from 1 through 10 {
-//   .bubble-#{$i} {
-//     width: random(150) + 50px;
-//     height: random(150) + 50px;
-//     background: radial-gradient(hsl(random(360), 70%, 50%),
-//         hsl(random(360), 70%, 30%));
-//     top: random(100) * 1%;
-//     left: random(100) * 1%;
-//     animation-delay: random(10) * -1s;
-//     animation-duration: 15s + random(10) * 1s;
-//   }
-// }
-
-// @keyframes float {
-
-//   0%,
-//   100% {
-//     transform: translateY(0) translateX(0) rotate(0deg) scale(1);
-//   }
-
-//   25% {
-//     transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
-//   }
-
-//   50% {
-//     transform: translateY(-100px) translateX(-25px) rotate(10deg) scale(1.2);
-//   }
-
-//   75% {
-//     transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
-//   }
-// } 
-
-
-html, body, section {
+html,
+body,
+section {
   height: 100%;
   margin-top: -80px;
   margin-left: -60px;
   margin-right: -60px;
   padding: 0;
   overflow-x: hidden;
-  // background: linear-gradient(to right, rgba(200, 191, 191, 0.258), rgba(218, 177, 249, 0.742) 50%, rgba(200, 191, 191, 0.258));
 }
- 
+
 .background-radial-gradient {
   position: relative;
   min-height: 100vh;
   padding-top: 50px;
   overflow: hidden;
 }
- 
+
 .bg-glass {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
- 
+
 
 .badge {
   font-size: 0.9em;
   padding: 0.4em 0.6em;
   color: black;
 }
+
 h1 {
   position: relative;
   color: #422482;
@@ -141,17 +38,18 @@ h1 {
   font-weight: bold;
   z-index: 100000 !important;
 }
+
 .allocation-info {
   cursor: pointer;
   color: #422482;
   // text-decoration: underline;
- 
+
   &:hover {
     color: #3f0847;
   }
 }
- 
-.btn  {
+
+.btn {
   background: rgba(145, 53, 176, 0.975);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
@@ -167,80 +65,80 @@ h1 {
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
- 
+
 .btn:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
   background-color: rgb(93, 36, 131);
   color: rgb(232, 247, 255);
 }
- 
-.container-header{
+
+.container-header {
   display: flex;
   justify-content: end;
   color: #0056b3;
 }
- 
-.container-header h4{
+
+.container-header h4 {
   padding-top: 20px;
   font-weight: bold;
 }
- 
-.container-header .sort{
+
+.container-header .sort {
   margin: 0 20px;
   display: block;
 }
- 
+
 .card {
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   border-radius: 20px;
 }
- 
+
 .modal-body input {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
 }
- 
+
 .card:hover {
   transform: translateY(-10px);
 }
- 
+
 .modal-content {
   border-radius: 10px;
 }
- 
+
 .form-control,
 .form-select {
   border-radius: 5px;
 }
- 
-.card-title{
+
+.card-title {
   margin-right: 30%;
 }
- 
+
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 123, 255, 0.1);
 }
- 
+
 .table-striped tbody tr:hover {
   background-color: rgba(0, 123, 255, 0.2);
 }
- 
+
 .alert {
   border-radius: 5px;
 }
- 
+
 .input-group {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
- 
+
 select {
   border-radius: 5px;
   padding: 5px;
 }
- 
+
 // Bubble effect
 .bubble {
   position: absolute;
@@ -248,49 +146,52 @@ select {
   opacity: 0.3;
   animation: float 20s infinite ease-in-out;
 }
- 
+
 @for $i from 1 through 10 {
   .bubble-#{$i} {
-      width: random(150) + 50px;
-      height: random(150) + 50px;
-      background: radial-gradient(
-          hsl(random(360), 70%, 50%),
-          hsl(random(360), 70%, 30%)
-      );
-      top: random(100) * 1%;
-      left: random(100) * 1%;
-      animation-delay: random(10) * -1s;
-      animation-duration: 15s + random(10) * 1s;
+    width: random(150) + 50px;
+    height: random(150) + 50px;
+    background: radial-gradient(hsl(random(360), 70%, 50%),
+        hsl(random(360), 70%, 30%));
+    top: random(100) * 1%;
+    left: random(100) * 1%;
+    animation-delay: random(10) * -1s;
+    animation-duration: 15s + random(10) * 1s;
   }
 }
- 
+
 @keyframes float {
-  0%, 100% {
-      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg) scale(1);
   }
+
   25% {
-      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
   }
+
   50% {
-      transform: translateY(-100px) translateX(-25px) rotate(10deg) scale(1.2);
+    transform: translateY(-100px) translateX(-25px) rotate(10deg) scale(1.2);
   }
+
   75% {
-      transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
+    transform: translateY(-50px) translateX(25px) rotate(5deg) scale(1.1);
   }
 }
- 
+
 .background-radial-gradient {
-  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
   overflow: hidden;
 }
- 
+
 .bubble {
   position: absolute;
   border-radius: 50%;
   opacity: 0.6;
   animation: move 20s infinite linear;
 }
- 
+
 .bubble-1 {
   width: 200px;
   height: 200px;
@@ -298,7 +199,7 @@ select {
   left: 30%;
   background-color: #ff8a8a;
 }
- 
+
 .bubble-2 {
   width: 250px;
   height: 250px;
@@ -306,61 +207,81 @@ select {
   left: 70%;
   background-color: #ffdd59;
 }
- 
+
 .bubble-3 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #48105f;
-}.bubble-4{
+}
+
+.bubble-4 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #59ffaf;
-} .bubble-5{
+}
+
+.bubble-5 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #ffdd59;
-} .bubble-6{
+}
+
+.bubble-6 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #c34d45;
-} .bubble-7{
+}
+
+.bubble-7 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #4f4d8f;
-} .bubble-8{
+}
+
+.bubble-8 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #60b94c;
-} .bubble-9{
+}
+
+.bubble-9 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #ffdd59;
-} .bubble-10 {
+}
+
+.bubble-10 {
   width: 250px;
   height: 250px;
   top: 60%;
   left: 70%;
   background-color: #272419;
 }
- 
+
 @keyframes move {
-  0% {transform: translateY(0) translateX(0);}
-  100% {transform: translateY(-100px) translateX(-50px);}
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+
+  100% {
+    transform: translateY(-100px) translateX(-50px);
+  }
 }
+
 .bg-glass {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
@@ -368,56 +289,63 @@ select {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
- 
+
 .card-title {
   color: #333;
 }
- 
+
 .card-body {
   padding: 20px;
 }
+
 .animate__animated {
   animation-duration: 1s;
 }
- 
+
 .animate__fadeInUp {
   animation-delay: 0.5s;
 }
- 
+
 .table {
-  background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-  backdrop-filter: blur(10px); /* Glassy effect */
+  background: rgba(255, 255, 255, 0.1);
+  /* Semi-transparent background */
+  backdrop-filter: blur(10px);
+  /* Glassy effect */
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Soft white border */
-  color: #ffffff; /* White text */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Soft white border */
+  color: #ffffff;
+  /* White text */
 }
- 
+
 /* Table header styling */
 .table thead th {
-  background: rgba(255, 255, 255, 0.2); /* Slightly more opaque for header */
-  // color: #ffffff; /* White text */
+  background: rgba(255, 255, 255, 0.2);
+
   color: black;
   text-align: center;
   padding: 15px;
   font-size: 1.1rem;
 }
- 
+
 /* Table body styling */
 .table tbody tr {
   transition: background 0.3s ease;
 }
- 
+
 .table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.2); /* Hover effect */
+  background: rgba(255, 255, 255, 0.2);
+  /* Hover effect */
 }
- 
+
 .table tbody td {
   padding: 15px;
   text-align: center;
   font-size: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Soft border for rows */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  /* Soft border for rows */
 }
- 
+
 /* Styling for the action buttons */
 .table .btn {
   padding: 5px 10px;
@@ -428,11 +356,11 @@ select {
   border-radius: 5px;
   transition: background 0.3s ease;
 }
- 
+
 .table .btn:hover {
   background-color: #0056b3;
 }
- 
+
 /* Pagination controls */
 .pagination-controls {
   display: flex;
@@ -440,7 +368,7 @@ select {
   align-items: center;
   margin-top: 20px;
 }
- 
+
 .pagination-controls button {
   background-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
@@ -451,11 +379,11 @@ select {
   cursor: pointer;
   transition: background 0.3s ease;
 }
- 
+
 .pagination-controls button:hover {
   background-color: rgba(255, 255, 255, 0.4);
 }
- 
+
 .pagination-controls span {
   color: #ffffff;
   font-size: 1rem;

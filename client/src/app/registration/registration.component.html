@@ -1,8 +1,7 @@
 <body>
     
     <div class="container">
-        <!-- <div id="radius-shape-1" class="position-absolute shadow-5-strong"></div>
-        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>  -->
+
         <div class="row justify-content-center">
             <div class="col-md-5">
                
@@ -63,7 +62,7 @@
                     </form>
                     <div class="separator">OR</div>
                     <div class="footer-text">
-                        <p>Already have an account? <a (click)="openModal()">Sign In</a></p>
+                        <p>Already have an account? <a (click)="openModal()" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</a></p>
                     </div>
                     <div *ngIf="showMessage" class="alert alert-success mt-3 text-center">
                         {{responseMessage}}

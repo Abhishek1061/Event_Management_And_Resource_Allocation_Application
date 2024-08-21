@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AllocationRepository extends JpaRepository<Allocation, Long> {
-    // extend jpa repository and add custom methods if needed
+
 }

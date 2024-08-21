@@ -44,6 +44,9 @@
                                     <option *ngFor="let item of eventList" [value]="item.eventID">{{item.eventID}} -
                                         {{item.title}}</option>
                                 </select>
+                                <div *ngIf="itemForm.controls['eventId'].invalid && (itemForm.controls['eventId'].dirty || itemForm.controls['eventId'].touched)" class="validation-message">
+                                        Event is required.
+                                      </div>
                             </div>
                             <div class="mb-3">
                                 <label for="resourceId" class="form-label">Resource</label>
@@ -53,11 +56,18 @@
                                     <option *ngFor="let item of resourceList" [value]="item.resourceID">
                                         {{item.resourceID}} - {{item.name}}</option>
                                 </select>
+                                <div *ngIf="itemForm.controls['resourceId'].invalid && (itemForm.controls['resourceId'].dirty || itemForm.controls['resourceId'].touched)" class="validation-message">
+                                    Resource is required.
+                                  </div>
                             </div>
                             <div class="mb-3">
                                 <label for="quantity" class="form-label">Quantity</label>
                                 <input type="number" id="quantity" formControlName="quantity" placeholder="Quantity"
                                     class="form-control form-control-lg animate__animated animate__fadeInUp">
+                                    <div *ngIf="itemForm.controls['quantity'].invalid && (itemForm.controls['quantity'].dirty || itemForm.controls['quantity'].touched)"class="validation-message">Quantity is required.</div>
+                                    <div *ngIf="itemForm.controls['quantity'].invalid && (itemForm.controls['quantity'].dirty || itemForm.controls['quantity'].touched)" class="validation-message">
+                                        Quantity must be at least 1.
+                                      </div>
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>

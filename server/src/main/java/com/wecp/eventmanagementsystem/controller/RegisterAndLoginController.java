@@ -5,27 +5,19 @@ import com.wecp.eventmanagementsystem.dto.LoginResponse;
 import com.wecp.eventmanagementsystem.entity.User;
 import com.wecp.eventmanagementsystem.exceptions.UserExistsException;
 import com.wecp.eventmanagementsystem.jwt.JwtUtil;
-import com.wecp.eventmanagementsystem.repository.UserRepository;
 import com.wecp.eventmanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class RegisterAndLoginController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
 
