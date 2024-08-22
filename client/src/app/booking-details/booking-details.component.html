@@ -18,7 +18,7 @@
         <div class="card-body">
           <form [formGroup]="itemForm" (ngSubmit)="searchEvent()" class="mb-4">
             <div class="input-group">
-              <input type="text" formControlName="searchTerm" class="form-control" placeholder="Enter event ID">
+              <input type="text" formControlName="searchTerm" class="form-control" placeholder="Enter event ID or Title">
               <button type="submit" class="btn btn-primary animate__animated animate__fadeIn" [disabled]="!itemForm.valid">
                 <i class="fas fa-search"></i> Search
               </button>
